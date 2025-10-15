@@ -1,13 +1,70 @@
 body{
     margin: 0;
 }
-
+p{
+    margin: 0;
+    padding: 0;
+}
 /*this is used to stop the section at one section while scrolling*/
 .container {
     height: 100vh;
     overflow-y: scroll; 
     scroll-snap-type: y mandatory; 
 }
+
+/*Pop up contrustion*/
+
+.popup-overlay {
+            position: fixed; /* Stays in place even if you scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensures it's on top of everything */
+        }
+
+        /* --- Pop-up Box --- */
+        .popup-content {
+            background-color: rgb(246, 201, 201);
+            padding: 40px 25px 25px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 400px; /* Maximum width for the pop-up */
+            position: relative; /* Needed to position the close button */
+            text-align: center;
+        }
+
+        /* --- Close Button (Red Box) --- */
+        .close-btn {
+            position: absolute; /* Positioned relative to .popup-content */
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            background-color: #e74c3c; /* Red color */
+            border-radius: 50%; /* Makes it a circle, you can use 0 for a square */
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border: 2px solid rgb(0, 0, 0);
+            
+        }
+        
+        .close-btn::after {
+            content: '×'; 
+        }
+
+/*Pop up construction closed*/
+
 
 section{
     height: 100vh;
