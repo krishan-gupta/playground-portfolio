@@ -12,45 +12,46 @@ export function Footer() {
           <div className="footer-brand">
             <Link to="/" className="footer-logo">
               <span className="logo-box">
-                <span className="logo-char">P</span>
+                <span className="logo-char">KG</span>
               </span>
               <span className="logo-name">
-                PORTFOLIO<span className="logo-sub">.LAB</span>
+                KRISHAN <span className="logo-sub">GUPTA</span>
               </span>
             </Link>
             <p className="footer-bio">
-              Architecting resilient distributed systems, interactive WebGL/WebGPU visual experiences, and robust AI/ML inference infrastructure.
+              Student developer working across web, AI/ML and cloud, based in Chennai.
             </p>
           </div>
 
           <div className="footer-nav-col">
             <h4 className="footer-col-title">Navigation</h4>
             <ul className="footer-links">
-              <li><Link to="/">Overview & Work</Link></li>
-              <li><Link to="/projects">Projects Library</Link></li>
-              <li><Link to="/resume">Resume Branches</Link></li>
-              <li><a href="#contact">Contact & Inquiries</a></li>
+              <li><Link to="/">Overview</Link></li>
+              <li><Link to="/projects">Projects</Link></li>
+              <li><Link to="/resume">Resume Tracks</Link></li>
+              <li><a href="#contact">Contact</a></li>
             </ul>
           </div>
 
           <div className="footer-nav-col">
-            <h4 className="footer-col-title">Specialization</h4>
+            <h4 className="footer-col-title">Specialization Tracks</h4>
             <ul className="footer-links">
-              <li><Link to="/resume/developer">Software Engineering</Link></li>
-              <li><Link to="/resume/researcher">AI/ML Research</Link></li>
-              <li><Link to="/resume/aiml">ML Systems & LLMOps</Link></li>
+              <li><Link to="/resume/developer">Developer</Link></li>
+              <li><Link to="/resume/researcher">Researcher</Link></li>
+              <li><Link to="/resume/aiml">AI / ML Engineer</Link></li>
               <li><Link to="/resume/cloud-devops">Cloud & Infrastructure</Link></li>
+              <li><Link to="/resume/leadership">Leadership</Link></li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
           <p className="footer-copyright">
-            © {currentYear} Portfolio. Handcrafted with precision. All rights reserved.
+            © {currentYear} Krishan Gupta. Built with precision and care.
           </p>
           <div className="footer-meta-pill">
             <span className="status-ping" />
-            <span>BUILT WITH REACT & NATIVE CSS</span>
+            <span>VIT CHENNAI // 2029</span>
           </div>
         </div>
       </div>

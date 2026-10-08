@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from '../../router';
 import { HorizonBloom } from '../../components/HorizonBloom/HorizonBloom';
 import { TechText } from '../../components/TechText/TechText';
 import { ProjectCard } from '../../components/ProjectCard/ProjectCard';
 import { getFeaturedProjects } from '../../data/projects';
-import { skillCategories } from '../../data/resume';
+import { skillCategories, additionalTech, csFundamentals, areasOfInterest } from '../../data/resume';
 import { achievementsData } from '../../data/achievements';
 import { useReveal } from '../../hooks/useReveal';
 import { useCountUp } from '../../hooks/useCountUp';
@@ -17,7 +17,7 @@ function StatTile({ target, suffix = '', label }) {
   return (
     <div ref={ref} className="stat-tile">
       <div className="stat-number">
-        {count}
+        {count.toLocaleString()}
         <span className="stat-suffix">{suffix}</span>
       </div>
       <div className="stat-label">{label}</div>
@@ -29,12 +29,13 @@ export function HomePage() {
   const featuredProjects = getFeaturedProjects();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const horizonRef = useRef(null);
 
-  const [aboutRef, aboutRevealed] = useReveal();
-  const [skillsRef, skillsRevealed] = useReveal();
-  const [featuredRef, featuredRevealed] = useReveal();
-  const [achievementsRef, achievementsRevealed] = useReveal();
-  const [contactRef, contactRevealed] = useReveal();
+  const [aboutRef] = useReveal();
+  const [skillsRef] = useReveal();
+  const [featuredRef] = useReveal();
+  const [achievementsRef] = useReveal();
+  const [contactRef] = useReveal();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -47,61 +48,86 @@ export function HomePage() {
 
   return (
     <div className="home-page-wrapper">
-      {/* 2. Hero Section */}
+      {/* 6.2 Home: Hero */}
       <section id="hero" className="hero-section">
-        <HorizonBloom />
-
-        {/* Small mono captions in corners */}
-        <div className="hero-caption hero-caption-tl" aria-hidden="true">
-          SYS.LOC // 37.7749° N, 122.4194° W<br />
-          ENV // PRODUCTION_V2
-        </div>
-        <div className="hero-caption hero-caption-tr" aria-hidden="true">
-          SYS.STATUS // NOMINAL<br />
-          ORBIT // 2026.04
-        </div>
-
-        <div className="container hero-content">
-          <div className="hero-badge">
-            <span className="hero-badge-dot" />
-            <span className="hero-badge-text">PORTFOLIO // V2.0 MULTI-TRACK</span>
+        {/* Horizon Bloom: ReactBits Pro Sunrise breaking over planet edge */}
+        <HorizonBloom
+          ref={horizonRef}
+          colors={['#FF9A3D', '#8A3A00']}
+          backgroundColor="#0a0908"
+          horizon={0.72}
+          curvature={1.0}
+          sunPosition={0.08}
+          sunrise={1.0}
+          flare={1.0}
+          rim={1.0}
+          atmosphere={1.0}
+          thickness={1.0}
+          stars={0.5}
+          airglow={0.5}
+          clouds={0.5}
+          bloom={0.5}
+          grain={0.25}
+          aurora={1.0}
+          autoAurora={false}
+          parallax={0.5}
+          intro={true}
+          interactive={true}
+        >
+          {/* Corner mono captions */}
+          <div className="hero-caption hero-caption-tl" aria-hidden="true">
+            SYS.LOC // CHENNAI, INDIA<br />
+            BATCH // MAY 2029
+          </div>
+          <div className="hero-caption hero-caption-tr" aria-hidden="true">
+            STATUS // OPEN TO INTERNSHIPS<br />
+            AFFIL // VIT CHENNAI
           </div>
 
-          <h1 className="hero-title">
-            <TechText text="Lorem Ipsum Dolor Sit" glitchOnMount={true} />
-          </h1>
+          <div className="hero-content">
+            <div className="hero-badge">
+              <span className="hero-badge-dot" />
+              <span className="hero-badge-text">PORTFOLIO // MULTI-TRACK</span>
+            </div>
 
-          <p className="hero-subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
+            <div className="hero-title-box" onClick={(e) => e.stopPropagation()}>
+              <h1 style={{ margin: 0, padding: 0 }}>
+                <TechText text="Krishan Gupta" isHeroTitle={true} />
+              </h1>
+            </div>
 
-          <div className="hero-buttons">
-            <Link to="/projects" className="btn btn-primary">
-              View Work
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
+            <p className="hero-subtitle">
+              B.Tech CSE (AI & ML) student at VIT Chennai, building practical tools and exploring AI applications.
+            </p>
+
+            <div className="hero-buttons" onClick={(e) => e.stopPropagation()}>
+              <Link to="/projects" className="btn btn-primary">
+                View Work
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </Link>
+              <Link to="/resume" className="btn btn-secondary">
+                Resume Tracks
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                </svg>
+              </Link>
+            </div>
+
+            <a href="#about" className="hero-scroll-cue" aria-label="Scroll down to About section" onClick={(e) => e.stopPropagation()}>
+              <span>EXPLORE BELOW</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <polyline points="6 9 12 15 18 9" />
               </svg>
-            </Link>
-            <Link to="/resume" className="btn btn-secondary">
-              Resume Tracks
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-              </svg>
-            </Link>
+            </a>
           </div>
-
-          <a href="#about" className="hero-scroll-cue" aria-label="Scroll to content">
-            <span>SCROLL DOWN</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </a>
-        </div>
+        </HorizonBloom>
       </section>
 
-      {/* 3. About Section */}
+      {/* 6.3 About The Journey */}
       <section id="about" className="section" ref={aboutRef}>
         <div className="container">
           <div className="section-header">
@@ -120,32 +146,33 @@ export function HomePage() {
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                     <circle cx="12" cy="7" r="4" />
                   </svg>
-                  <span className="portrait-label">PORTRAIT PLACEHOLDER</span>
+                  <span className="portrait-label">PORTRAIT [TBD]</span>
+                  <span className="portrait-sublabel">Photo to be updated</span>
                 </div>
               </div>
             </div>
 
             <div className="about-text-content">
               <p className="about-lead">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+                I'm a second-year B.Tech Computer Science student (AI & ML specialization) at VIT Chennai, graduating in May 2029. I like building practical tools and exploring applications of AI, and I take part in competitive hackathons.
               </p>
               <p className="about-bio">
-                Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra.
+                On campus I lead and build: I'm Management Lead at NEXUS VIT, Technical Specialist at CloudOps VITC and Web Developer at AWS Cloud Club VIT Chennai. My profile is moving from frontend work toward AI/ML and research, with a goal of landing a paid internship and building a strong research and patents record.
               </p>
 
-              {/* Stat tiles row */}
+              {/* Real stat tiles from section 13 */}
               <div className="about-stats-row">
-                <StatTile target={6} suffix="+" label="Years Craft" />
-                <StatTile target={24} suffix="+" label="Projects Shipped" />
-                <StatTile target={99} suffix=".9%" label="System Reliability" />
-                <StatTile target={3} suffix="+" label="Research Papers" />
+                <StatTile target={1100} suffix="+" label="Nexus Forum Attendees Coordinated" />
+                <StatTile target={300} suffix="+" label="AWS Student Builder Sign-ups Driven" />
+                <StatTile target={4} suffix="" label="Certifications & Job Simulations" />
+                <StatTile target={1} suffix="" label="Patent Application (Transferred)" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. Skills Section */}
+      {/* 6.4 Skills Matrix */}
       <section id="skills" className="section" ref={skillsRef}>
         <div className="container">
           <div className="section-header">
@@ -154,10 +181,11 @@ export function HomePage() {
               Technical <span className="text-gradient">Skill Matrix</span>
             </h2>
             <p className="section-description">
-              Handcrafted architecture spanning real-time browser graphics, distributed backend systems, and cutting-edge machine learning research.
+              Core technologies, frameworks, and tools used across campus leadership, IoT builds, and machine learning projects.
             </p>
           </div>
 
+          {/* 4 Category Cards */}
           <div className="skills-categories-grid">
             {skillCategories.map((category) => (
               <div key={category.id} className="skill-category-card card">
@@ -176,38 +204,67 @@ export function HomePage() {
                   {category.skills.map((skill) => (
                     <div key={skill.name} className="skill-chip">
                       <span className="skill-name">{skill.name}</span>
-                      <span className="skill-level">{skill.level}</span>
                     </div>
                   ))}
                 </div>
               </div>
             ))}
           </div>
+
+          {/* Additional Skill Strips */}
+          <div className="skills-aux-wrapper">
+            <div className="aux-strip-card">
+              <span className="aux-strip-label">ALSO USED IN PROJECTS</span>
+              <div className="aux-strip-chips">
+                {additionalTech.map((item) => (
+                  <span key={item} className="tag-chip">{item}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="aux-strip-card">
+              <span className="aux-strip-label">CS FUNDAMENTALS</span>
+              <div className="aux-strip-chips">
+                {csFundamentals.map((item) => (
+                  <span key={item} className="tag-chip">{item}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="aux-strip-card">
+              <span className="aux-strip-label">AREAS OF INTEREST</span>
+              <div className="aux-strip-chips">
+                {areasOfInterest.map((item) => (
+                  <span key={item} className="tag-chip" style={{ color: 'var(--accent-2)', borderColor: 'rgba(255, 122, 26, 0.3)' }}>{item}</span>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* 5. Featured Projects Section */}
+      {/* 6.5 Featured Projects */}
       <section id="featured" className="section" ref={featuredRef}>
         <div className="container">
           <div className="section-header">
             <span className="section-label">03 // Featured Work</span>
             <h2 className="section-title">
-              Selected <span className="text-gradient">Innovations</span>
+              Selected <span className="text-gradient">Projects & Prototypes</span>
             </h2>
             <p className="section-description">
-              Explore key engineering milestones and interactive laboratory systems.
+              Key builds spanning campus laundry platforms, embedded acoustic ML, privacy-first mobile vision, and semantic retrieval.
             </p>
           </div>
 
           <div className="featured-projects-grid">
-            {featuredProjects.slice(0, 4).map((project) => (
+            {featuredProjects.map((project) => (
               <ProjectCard key={project.slug} project={project} viewMode="grid" />
             ))}
           </div>
 
           <div className="featured-actions-row">
             <Link to="/projects" className="btn btn-secondary">
-              <span>View All Projects</span>
+              <span>View All Projects in Archive</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
@@ -217,7 +274,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 6. Achievements, Patents and Certifications */}
+      {/* 6.6 Achievements, Patents and Certifications */}
       <section id="achievements" className="section" ref={achievementsRef}>
         <div className="container">
           <div className="section-header">
@@ -230,7 +287,7 @@ export function HomePage() {
           <div className="achievements-grid">
             {/* Column 1: Achievements */}
             <div className="achievement-column">
-              <h3 className="achievement-column-title">Achievements & Awards</h3>
+              <h3 className="achievement-column-title">Achievements</h3>
               {achievementsData.achievements.map((item) => (
                 <div key={item.id} className="compact-item-card">
                   <div className="compact-item-meta">
@@ -243,9 +300,9 @@ export function HomePage() {
               ))}
             </div>
 
-            {/* Column 2: Patents */}
+            {/* Column 2: Patents and Research */}
             <div className="achievement-column">
-              <h3 className="achievement-column-title">Patents & IP</h3>
+              <h3 className="achievement-column-title">Patents & Research</h3>
               {achievementsData.patents.map((item) => (
                 <div key={item.id} className="compact-item-card">
                   <div className="compact-item-meta">
@@ -276,31 +333,33 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 7. Contact Section */}
+      {/* 6.7 Contact Section */}
       <section id="contact" className="section" ref={contactRef}>
         <div className="container">
           <div className="contact-card-wrapper">
             <div className="contact-info">
               <span className="section-label">05 // Transmission</span>
               <h2 className="contact-heading">
-                Lorem Ipsum <span className="text-gradient">Dolor?</span>
+                Let's build something <span className="text-gradient">together?</span>
               </h2>
               <p className="contact-subtext">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Whether discussing research opportunities, distributed architecture, or high-craft web engineering.
+                Open to internships, research collaboration and project work.
               </p>
 
               <div className="contact-quick-links">
                 <div className="contact-quick-item">
                   <span className="contact-quick-icon">✉</span>
-                  <span>contact@example.com</span>
+                  <a href="mailto:work.krishan.gupta@gmail.com" style={{ color: 'var(--text)' }}>
+                    work.krishan.gupta@gmail.com
+                  </a>
                 </div>
                 <div className="contact-quick-item">
                   <span className="contact-quick-icon">📍</span>
-                  <span>San Francisco, CA / Remote</span>
+                  <span>Chennai, India</span>
                 </div>
                 <div className="contact-quick-item">
                   <span className="contact-quick-icon">⚡</span>
-                  <span>Typical response time: &lt; 24 hours</span>
+                  <span>Response Time: TBD</span>
                 </div>
               </div>
             </div>
@@ -308,7 +367,7 @@ export function HomePage() {
             <div className="contact-form-side">
               {formSubmitted ? (
                 <div className="form-success-banner">
-                  Transmission sent successfully! Thank you for reaching out.
+                  Message transmission received! Thank you for getting in touch.
                 </div>
               ) : (
                 <form className="contact-form" onSubmit={handleFormSubmit}>
@@ -344,7 +403,7 @@ export function HomePage() {
                       id="contact-message"
                       required
                       className="form-textarea"
-                      placeholder="Discussing upcoming project, research inquiry, or role..."
+                      placeholder="Discussing internship opportunities, research collaborations, or technical projects..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     />

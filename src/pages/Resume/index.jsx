@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useRoute, Link } from '../../router';
-import { tracks, getTrackById, defaultTrackId } from '../../data/tracks';
+import React from 'react';
+import { useRoute } from '../../router';
+import { getTrackById, defaultTrackId } from '../../data/tracks';
 import { getExperiencesForTrack, education } from '../../data/resume';
 import { achievementsData } from '../../data/achievements';
 import { BranchedMenu } from '../../components/BranchedMenu/BranchedMenu';
@@ -19,19 +19,27 @@ export function ResumePage({ track: initialTrack }) {
     navigate(`/resume/${newTrackId}`);
   };
 
-  const handleMockPdfDownload = () => {
-    alert(`Downloading ${currentTrack.label} specialized resume PDF (${currentTrack.pdfUrl})`);
+  const handlePdfDownload = () => {
+    alert(`Resume PDF for track "${currentTrack.label}" is currently TBD. Real PDF will be available soon.`);
   };
 
   return (
     <div className="resume-page-wrapper">
-      {/* Top Hero */}
+      {/* Top Header with Calmer Horizon Bloom */}
       <section className="resume-hero">
-        <HorizonBloom compact={true} />
+        <HorizonBloom
+          compact={true}
+          interactive={false}
+          intro={false}
+          sunrise={0.7}
+          flare={0.4}
+          stars={0.3}
+          atmosphere={0.6}
+        />
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <span className="section-label">SPECIALIZATION // RESUME</span>
           <h1 className="resume-title">
-            <TechText text="Resume" glitchOnMount={true} />
+            <TechText text="Resume" />
             <span className="text-gradient"> Branches</span>
           </h1>
           <p className="resume-subtitle">
@@ -57,13 +65,13 @@ export function ResumePage({ track: initialTrack }) {
             </div>
 
             <div className="track-actions">
-              <button onClick={handleMockPdfDownload} className="btn btn-primary btn-sm">
+              <button onClick={handlePdfDownload} className="btn btn-primary btn-sm">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                   <polyline points="7 10 12 15 17 10" />
                   <line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
-                <span>Download {currentTrack.label} PDF</span>
+                <span>Download {currentTrack.label} PDF (TBD)</span>
               </button>
             </div>
           </div>
@@ -99,13 +107,13 @@ export function ResumePage({ track: initialTrack }) {
 
         {/* Experience Section */}
         <section className="resume-section">
-          <h2 className="resume-sec-title">Professional Experience</h2>
+          <h2 className="resume-sec-title">Experience & Leadership</h2>
           {trackExperiences.length > 0 ? (
             trackExperiences.map((exp) => (
               <ExperienceCard key={exp.id} experience={exp} />
             ))
           ) : (
-            <p>No experiences tagged for this track.</p>
+            <p style={{ color: 'var(--text-muted)' }}>No experiences tagged for this track.</p>
           )}
         </section>
 

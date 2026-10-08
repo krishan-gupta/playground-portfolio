@@ -18,7 +18,6 @@ export function Nav() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile drawer on route change
   useEffect(() => {
     setMobileMenuOpen(false);
     setResumeDropdownOpen(false);
@@ -27,14 +26,14 @@ export function Nav() {
   return (
     <header className={`nav-header ${isScrolled ? 'nav-scrolled' : ''}`}>
       <div className="nav-container">
-        {/* Monogram Logo */}
-        <Link to="/" className="nav-logo" aria-label="Home">
+        {/* Monogram Logo: KG */}
+        <Link to="/" className="nav-logo" aria-label="Krishan Gupta Home">
           <span className="logo-box">
-            <span className="logo-char">P</span>
+            <span className="logo-char">KG</span>
             <span className="logo-dot" />
           </span>
           <span className="logo-name">
-            PORTFOLIO<span className="logo-sub">.LAB</span>
+            KRISHAN <span className="logo-sub">GUPTA</span>
           </span>
         </Link>
 
@@ -64,7 +63,7 @@ export function Nav() {
               to="/resume"
               className={`nav-link nav-link-dropdown ${pathname.startsWith('/resume') ? 'nav-link-active' : ''}`}
             >
-              Resume
+              Resume Tracks
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className={`dropdown-chevron ${resumeDropdownOpen ? 'rotated' : ''}`}>
                 <polyline points="6 9 12 15 18 9" />
               </svg>
@@ -119,10 +118,10 @@ export function Nav() {
               02 // Projects Library
             </Link>
             <Link to="/resume" className="mobile-link">
-              03 // Resume (All Tracks)
+              03 // Resume Tracks
             </Link>
             <div className="mobile-sub-tracks">
-              <span className="mobile-tracks-label">BRANCHES:</span>
+              <span className="mobile-tracks-label">SPECIALIZATIONS:</span>
               {tracks.map(t => (
                 <Link key={t.id} to={`/resume/${t.id}`} className="mobile-track-link">
                   → {t.label}

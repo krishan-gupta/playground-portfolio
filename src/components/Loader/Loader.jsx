@@ -6,7 +6,6 @@ export function Loader({ onComplete }) {
   const [isFadingOut, setIsFadingOut] = useState(false);
 
   useEffect(() => {
-    // Check if already shown in this session
     const hasLoaded = sessionStorage.getItem('portfolio_intro_loaded');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -16,7 +15,7 @@ export function Loader({ onComplete }) {
     }
 
     const startTime = performance.now();
-    const duration = 1400; // ~1.4 seconds
+    const duration = 1350;
 
     const interval = setInterval(() => {
       const elapsed = performance.now() - startTime;
@@ -29,7 +28,7 @@ export function Loader({ onComplete }) {
         setIsFadingOut(true);
         setTimeout(() => {
           if (onComplete) onComplete();
-        }, 400);
+        }, 350);
       }
     }, 24);
 
@@ -40,18 +39,18 @@ export function Loader({ onComplete }) {
     <div className={`loader-screen ${isFadingOut ? 'loader-fade-out' : ''}`} aria-hidden={isFadingOut}>
       <div className="loader-inner">
         <div className="loader-monogram">
-          <span className="monogram-letter">P</span>
+          <span className="monogram-letter">KG</span>
           <span className="monogram-spark" />
         </div>
         <div className="loader-terminal">
           <span className="loader-prompt">$</span>
-          <span className="loader-text">initializing portfolio kernel...</span>
+          <span className="loader-text">initializing krishan gupta kernel...</span>
         </div>
         <div className="loader-bar-track">
           <div className="loader-bar-fill" style={{ width: `${progress}%` }} />
         </div>
         <div className="loader-meta">
-          <span className="loader-status">HORIZON // 2026</span>
+          <span className="loader-status">VIT CHENNAI // CSE (AI & ML)</span>
           <span className="loader-pct">{progress}%</span>
         </div>
       </div>

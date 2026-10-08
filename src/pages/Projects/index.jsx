@@ -26,17 +26,25 @@ export function ProjectsPage() {
 
   return (
     <div className="projects-page-wrapper">
-      {/* Header with compact horizon bloom */}
+      {/* Header with calmer compact horizon bloom */}
       <section className="projects-hero">
-        <HorizonBloom compact={true} />
+        <HorizonBloom
+          compact={true}
+          interactive={false}
+          intro={false}
+          sunrise={0.7}
+          flare={0.4}
+          stars={0.3}
+          atmosphere={0.6}
+        />
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <span className="section-label">ARCHIVE // INDEX</span>
           <h1 className="projects-title">
-            <TechText text="Projects" glitchOnMount={true} />
+            <TechText text="Projects" />
             <span className="text-gradient"> Library</span>
           </h1>
           <p className="projects-subtitle">
-            Cataloging {projects.length} laboratory experiments, production architectures, distributed systems, and open-source contributions.
+            Exploring practical web platforms, embedded IoT prototypes, on-device mobile AI concepts, and semantic search engines.
           </p>
         </div>
       </section>
@@ -76,7 +84,7 @@ export function ProjectsPage() {
             </svg>
             <h3 className="empty-title">No projects match your filter</h3>
             <p className="empty-desc">
-              Try adjusting your search query or selecting a different category filter.
+              Try searching for "react", "esp32", "claude", or selecting a different category filter.
             </p>
             <button className="btn btn-secondary btn-sm" onClick={clearFilters}>
               Clear All Filters

@@ -6,7 +6,7 @@ export function SideTab() {
     <aside className="side-tab-container" aria-label="Availability Status">
       <a href="#contact" className="side-tab-pill">
         <span className="side-tab-status-dot" />
-        <span className="side-tab-text">AVAILABLE FOR OPPORTUNITIES</span>
+        <span className="side-tab-text">OPEN TO INTERNSHIPS & RESEARCH COLLABORATION</span>
       </a>
     </aside>
   );
