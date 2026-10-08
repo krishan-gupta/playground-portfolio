@@ -1,0 +1,321 @@
+@import './tokens.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-body);
+  font-size: 16px;
+  background-color: var(--bg);
+  color: var(--text);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle background grid pattern overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 122, 26, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 122, 26, 0.02) 1px, transparent 1px);
+  background-size: 56px 56px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: clamp(1.85rem, 4.5vw, 3.25rem);
+}
+
+h3 {
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img, video, svg {
+  display: block;
+  max-width: 100%;
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+}
+
+::selection {
+  background: rgba(255, 122, 26, 0.35);
+  color: #ffffff;
+}
+
+/* Focus outline */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Layout Utilities */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  padding: 6.5rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 4.5rem 0;
+  }
+}
+
+/* Section Header */
+.section-header {
+  margin-bottom: 3.5rem;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 122, 26, 0.08);
+  border: 1px solid rgba(255, 122, 26, 0.25);
+  color: var(--accent-2);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.section-label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.section-title {
+  margin-bottom: 0.85rem;
+}
+
+.section-description {
+  max-width: 640px;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+}
+
+/* Text Accent */
+.text-gradient {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Standard Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.6rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.btn-primary {
+  background: var(--gradient-accent);
+  color: #0a0908;
+  font-weight: 700;
+  box-shadow: 0 4px 20px rgba(255, 122, 26, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 122, 26, 0.55);
+}
+
+.btn-secondary {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  border-color: rgba(255, 122, 26, 0.4);
+  background: var(--bg-elev-2);
+  transform: translateY(-2px);
+  color: var(--accent-2);
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Card base styles */
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  position: relative;
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 179, 71, 0.2), transparent);
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 122, 26, 0.35);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 122, 26, 0.12);
+}
+
+/* Tag / Chip */
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.65rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  transition: all var(--transition-fast);
+}
+
+.tag-chip:hover {
+  color: var(--accent-2);
+  border-color: rgba(255, 122, 26, 0.25);
+  background: rgba(255, 122, 26, 0.06);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s var(--ease-out) forwards;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

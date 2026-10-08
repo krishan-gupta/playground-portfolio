@@ -1,0 +1,66 @@
+.social-dock-wrapper {
+  position: fixed;
+  bottom: 2.5rem;
+  left: 2rem;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 122, 26, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dock-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all var(--transition-fast);
+}
+
+.dock-item:hover {
+  color: var(--accent-2);
+  background: rgba(255, 122, 26, 0.15);
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 4px 14px rgba(255, 122, 26, 0.35);
+}
+
+.dock-tooltip {
+  position: absolute;
+  top: -34px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border-light);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.dock-item:hover .dock-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .social-dock-wrapper {
+    bottom: 1.5rem;
+    left: 1.25rem;
+  }
+}

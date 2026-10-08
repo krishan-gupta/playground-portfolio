@@ -1,0 +1,240 @@
+.branched-menu-wrapper {
+  width: 100%;
+  margin: 2rem 0 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.branched-root-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.branched-root-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1.25rem;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 16px rgba(255, 122, 26, 0.2);
+}
+
+.branched-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: pulseGlow 1.8s infinite;
+}
+
+.branched-root-label {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--accent-2);
+}
+
+.branched-root-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Branch Lines */
+.branched-lines-container {
+  width: 100%;
+  max-width: 1100px;
+  height: 48px;
+  margin-top: 0.5rem;
+  position: relative;
+}
+
+.branched-lines-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.branch-bus-line,
+.branch-feeder-line,
+.branch-drop-line {
+  stroke: rgba(255, 122, 26, 0.25);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+
+.branch-node-dot {
+  fill: var(--border);
+  stroke: rgba(255, 122, 26, 0.4);
+  stroke-width: 1;
+}
+
+.branch-line-active .branch-drop-line {
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-dasharray: none;
+  filter: drop-shadow(0 0 6px var(--accent));
+}
+
+.branch-line-active .branch-node-dot {
+  fill: var(--accent);
+  stroke: var(--accent-2);
+}
+
+/* Tracks Grid */
+.branched-tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.branched-track-item {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.branched-track-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+.branched-track-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 122, 26, 0.4);
+  background: var(--bg-elev-2);
+}
+
+.branched-track-item:hover::before {
+  background: var(--gradient-accent);
+}
+
+.branched-track-active {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, rgba(255, 122, 26, 0.08) 0%, rgba(20, 17, 15, 0.95) 100%);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 122, 26, 0.2);
+  transform: translateY(-2px);
+}
+
+.branched-track-active::before {
+  background: var(--gradient-accent);
+}
+
+.branched-track-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.branched-track-index {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.branched-track-badge {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.branched-track-active .branched-track-badge {
+  color: var(--accent-2);
+  background: rgba(255, 122, 26, 0.12);
+  border: 1px solid rgba(255, 122, 26, 0.25);
+}
+
+.branched-track-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+.branched-track-active .branched-track-title {
+  color: #ffffff;
+}
+
+.branched-track-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.indicator-line {
+  height: 2px;
+  flex: 1;
+  background: var(--border);
+  transition: background 0.3s ease;
+}
+
+.branched-track-active .indicator-line {
+  background: var(--accent);
+}
+
+.indicator-status {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.branched-track-active .indicator-status {
+  color: var(--accent);
+}
+
+/* Compact version */
+.branched-menu-compact {
+  margin: 1.5rem 0 2.5rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .branched-tracks-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .branched-lines-container {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .branched-tracks-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}

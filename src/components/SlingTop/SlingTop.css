@@ -1,0 +1,103 @@
+.sling-button {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2rem;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 64px;
+  background: var(--bg-elev-2);
+  border: 1px solid rgba(255, 122, 26, 0.35);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 122, 26, 0.25);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  overflow: visible;
+}
+
+.sling-button:hover {
+  border-color: var(--accent);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 122, 26, 0.45);
+  transform: translateY(-3px);
+}
+
+.sling-bands {
+  position: absolute;
+  top: 10px;
+  left: 6px;
+  right: 6px;
+  height: 2px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.sling-band {
+  width: 14px;
+  height: 2px;
+  background: rgba(255, 122, 26, 0.5);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.band-left {
+  transform-origin: left center;
+}
+
+.band-right {
+  transform-origin: right center;
+}
+
+.sling-projectile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-2);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  margin-top: 2px;
+}
+
+.sling-button:hover .sling-projectile {
+  transform: translateY(-4px);
+  color: #ffffff;
+}
+
+.sling-button:hover .band-left {
+  transform: rotate(-25deg);
+}
+
+.sling-button:hover .band-right {
+  transform: rotate(25deg);
+}
+
+.sling-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Launching recoil and spring */
+.sling-launching {
+  transform: translateY(6px) scale(0.95);
+  border-color: var(--accent);
+}
+
+.sling-launching .sling-projectile {
+  transform: translateY(-28px) scale(1.2);
+  color: #ffffff;
+  filter: drop-shadow(0 0 8px var(--accent));
+}
+
+@media (max-width: 768px) {
+  .sling-button {
+    bottom: 1.5rem;
+    right: 1.25rem;
+    width: 46px;
+    height: 56px;
+  }
+}

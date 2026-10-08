@@ -1,0 +1,21 @@
+.app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.page-transition-container {
+  flex: 1;
+  transition: opacity 0.22s var(--ease-out), transform 0.22s var(--ease-out);
+}
+
+.page-transitioning {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-ready {
+  opacity: 1;
+  transform: translateY(0);
+}

@@ -1,0 +1,209 @@
+.resume-page-wrapper {
+  padding-top: calc(var(--nav-height) + 2rem);
+  padding-bottom: 6rem;
+  position: relative;
+}
+
+.resume-hero {
+  position: relative;
+  padding: 3rem 0 1.5rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.resume-title {
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.resume-subtitle {
+  max-width: 680px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+/* Track Overview Header Card */
+.track-overview-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 2.75rem 3rem;
+  margin-bottom: 3.5rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+}
+
+.track-overview-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-accent);
+}
+
+.track-overview-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.track-headline {
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+  max-width: 760px;
+  margin-top: 0.5rem;
+}
+
+.track-summary-text {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  max-width: 820px;
+}
+
+.track-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Track Metrics Bar */
+.track-metrics-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 2rem;
+}
+
+.track-metric-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.track-metric-val {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.track-metric-name {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Resume Section Headers */
+.resume-section {
+  margin-bottom: 4rem;
+}
+
+.resume-sec-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.resume-sec-title::before {
+  content: '';
+  width: 5px;
+  height: 22px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* Education Card */
+.education-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.education-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.education-degree {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.education-period {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.education-institution {
+  color: var(--accent-2);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.education-honors {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: #34d399;
+  margin-bottom: 0.75rem;
+}
+
+.education-details {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+/* Highlighted Skills Grid */
+.skills-tags-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.highlighted-skill-pill {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 122, 26, 0.08);
+  border: 1px solid rgba(255, 122, 26, 0.25);
+  border-radius: var(--radius-full);
+  color: var(--accent-2);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+@media (max-width: 820px) {
+  .track-overview-card {
+    padding: 2rem 1.5rem;
+  }
+  .track-overview-top {
+    flex-direction: column;
+  }
+  .track-metrics-bar {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

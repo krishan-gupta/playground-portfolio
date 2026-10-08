@@ -1,0 +1,10 @@
+.tech-text {
+  display: inline-block;
+  position: relative;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.tech-text-decoding {
+  color: var(--accent-2);
+  text-shadow: 0 0 16px rgba(255, 122, 26, 0.65);
+}
