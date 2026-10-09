@@ -90,7 +90,7 @@ export const projects = [
     slug: 'semantic-search-engine',
     title: 'Semantic Search Engine for Documents',
     category: 'ai-ml',
-    featured: true,
+    featured: false,
     status: 'In progress (about 2-3 weeks)',
     date: 'TBD',
     summary: 'Semantic search over documents with both local and API-based embeddings, paired with a web application front end.',

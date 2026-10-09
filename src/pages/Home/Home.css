@@ -10,6 +10,8 @@
   padding-top: var(--nav-height);
   overflow: hidden;
   background-color: var(--bg);
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .hero-content {
@@ -22,6 +24,8 @@
   flex-direction: column;
   align-items: center;
   pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .hero-badge {
@@ -34,6 +38,8 @@
   border-radius: var(--radius-full);
   margin-bottom: 1.75rem;
   box-shadow: 0 0 20px rgba(255, 122, 26, 0.15);
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .hero-badge-dot {
@@ -50,11 +56,15 @@
   letter-spacing: 0.1em;
   color: var(--accent-2);
   font-weight: 600;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .hero-title-box {
   margin-bottom: 1.5rem;
   pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .hero-subtitle {
@@ -63,6 +73,8 @@
   max-width: 720px;
   margin: 0 auto 2.5rem;
   line-height: 1.65;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .hero-buttons {
@@ -72,6 +84,8 @@
   gap: 1.25rem;
   margin-bottom: 2rem;
   pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Corner Captions */
@@ -84,6 +98,8 @@
   pointer-events: none;
   z-index: 3;
   opacity: 0.75;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .hero-caption-tl {
@@ -97,18 +113,25 @@
 }
 
 .hero-scroll-cue {
+  position: absolute;
+  bottom: 1.6rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--accent-2);
   letter-spacing: 0.12em;
   text-decoration: none;
   pointer-events: auto;
-  margin-top: 1rem;
+  z-index: 10;
+  margin-top: 0;
   animation: bounceSlow 2.4s infinite ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 @keyframes bounceSlow {
@@ -347,12 +370,18 @@
   gap: 0.5rem;
 }
 
-/* Featured Projects Section */
+/* Featured Projects Section (Top 3 Projects in one row) */
 .featured-projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.75rem;
   margin-bottom: 3rem;
+}
+
+@media (max-width: 1080px) {
+  .featured-projects-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .featured-actions-row {
@@ -360,11 +389,18 @@
   justify-content: center;
 }
 
-/* Achievements, Patents, Certifications */
-.achievements-grid {
+/* Patents & Certifications (Two equal columns) */
+.patents-certifications-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.75rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.25rem;
+}
+
+@media (max-width: 860px) {
+  .patents-certifications-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 
 .achievement-column {

@@ -18,7 +18,7 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
     clouds = 0.5,
     bloom = 0.5,
     grain = 0.25,
-    aurora = 1.0,
+    aurora = 0.0,
     autoAurora = false,
     speed = 1.0,
     drift = 0.5,
@@ -41,8 +41,7 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
     pointerX: 0,
     pointerY: 0,
     targetPointerX: 0,
-    targetPointerY: 0,
-    auroras: [] // active clicked aurora bursts
+    targetPointerY: 0
   });
 
   const replay = useCallback(() => {
@@ -107,23 +106,6 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
       const y = ((e.clientY - rect.top) / height - 0.5) * 2;
       animStateRef.current.targetPointerX = x;
       animStateRef.current.targetPointerY = y;
-    };
-
-    const handleCanvasClick = (e) => {
-      if (!interactive || aurora <= 0) return;
-      const rect = container.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const clickY = e.clientY - rect.top;
-
-      // Spawn an aurora burst expanding along the horizon
-      animStateRef.current.auroras.push({
-        x: clickX,
-        y: clickY,
-        age: 0,
-        maxAge: 160,
-        width: Math.random() * 160 + 200,
-        hue: Math.random() > 0.4 ? 140 : 35 // greenish emerald or amber aurora
-      });
     };
 
     if (interactive) {
@@ -226,45 +208,7 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
         ctx.restore();
       }
 
-      // 4. Aurora Curtains (on-click interactive bursts)
-      if (state.auroras.length > 0) {
-        ctx.save();
-        ctx.globalCompositeOperation = 'screen';
-        for (let i = state.auroras.length - 1; i >= 0; i--) {
-          const a = state.auroras[i];
-          a.age += 1;
-          const life = 1 - a.age / a.maxAge;
-          if (life <= 0) {
-            state.auroras.splice(i, 1);
-            continue;
-          }
-
-          const auroraGrad = ctx.createLinearGradient(a.x, a.y - 180, a.x, a.y);
-          if (a.hue === 140) {
-            auroraGrad.addColorStop(0, 'rgba(52, 211, 153, 0)');
-            auroraGrad.addColorStop(0.5, `rgba(52, 211, 153, ${0.28 * life})`);
-            auroraGrad.addColorStop(1, `rgba(255, 154, 61, ${0.4 * life})`);
-          } else {
-            auroraGrad.addColorStop(0, 'rgba(255, 179, 71, 0)');
-            auroraGrad.addColorStop(0.5, `rgba(255, 154, 61, ${0.35 * life})`);
-            auroraGrad.addColorStop(1, `rgba(255, 230, 190, ${0.5 * life})`);
-          }
-
-          ctx.beginPath();
-          ctx.moveTo(a.x - a.width * 0.5, a.y);
-          for (let step = -a.width * 0.5; step <= a.width * 0.5; step += 15) {
-            const wave = Math.sin(state.time * 3 + step * 0.05) * 16 * life;
-            ctx.lineTo(a.x + step, a.y - 120 + wave);
-          }
-          ctx.lineTo(a.x + a.width * 0.5, a.y);
-          ctx.closePath();
-          ctx.fillStyle = auroraGrad;
-          ctx.fill();
-        }
-        ctx.restore();
-      }
-
-      // 5. Sun Flare & Corona burst where light breaks over the horizon
+      // 4. Sun Flare & Corona burst where light breaks over the horizon
       if (flare > 0) {
         ctx.save();
         ctx.globalCompositeOperation = 'screen';
@@ -367,13 +311,10 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
 
     animationFrameId = requestAnimationFrame(render);
 
-    canvas.addEventListener('click', handleCanvasClick);
-
     return () => {
       window.removeEventListener('resize', handleResize);
       if (interactive) {
         window.removeEventListener('mousemove', handleMouseMove);
-        canvas.removeEventListener('click', handleCanvasClick);
       }
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };

@@ -56,7 +56,7 @@ export function HomePage() {
           colors={['#FF9A3D', '#8A3A00']}
           backgroundColor="#0a0908"
           horizon={0.72}
-          curvature={1.0}
+          curvature={0.7}
           sunPosition={0.08}
           sunrise={1.0}
           flare={1.0}
@@ -68,7 +68,7 @@ export function HomePage() {
           clouds={0.5}
           bloom={0.5}
           grain={0.25}
-          aurora={1.0}
+          aurora={0}
           autoAurora={false}
           parallax={0.5}
           intro={true}
@@ -76,7 +76,7 @@ export function HomePage() {
         >
           {/* Corner mono captions */}
           <div className="hero-caption hero-caption-tl" aria-hidden="true">
-            SYS.LOC // CHENNAI, INDIA<br />
+            SYS.LOC // CHENNAI<br />
             BATCH // MAY 2029
           </div>
           <div className="hero-caption hero-caption-tr" aria-hidden="true">
@@ -116,14 +116,20 @@ export function HomePage() {
                 </svg>
               </Link>
             </div>
-
-            <a href="#about" className="hero-scroll-cue" aria-label="Scroll down to About section" onClick={(e) => e.stopPropagation()}>
-              <span>EXPLORE BELOW</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </a>
           </div>
+
+          {/* Scroll cue pinned near the bottom inside the dark planet area */}
+          <a
+            href="#about"
+            className="hero-scroll-cue"
+            aria-label="Scroll down to About section"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <span>EXPLORE BELOW</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </a>
         </HorizonBloom>
       </section>
 
@@ -243,7 +249,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 6.5 Featured Projects */}
+      {/* 6.5 Top 3 Projects */}
       <section id="featured" className="section" ref={featuredRef}>
         <div className="container">
           <div className="section-header">
@@ -252,19 +258,19 @@ export function HomePage() {
               Selected <span className="text-gradient">Projects & Prototypes</span>
             </h2>
             <p className="section-description">
-              Key builds spanning campus laundry platforms, embedded acoustic ML, privacy-first mobile vision, and semantic retrieval.
+              Key builds spanning campus laundry platforms, embedded acoustic ML and privacy-first mobile vision.
             </p>
           </div>
 
           <div className="featured-projects-grid">
-            {featuredProjects.map((project) => (
+            {featuredProjects.slice(0, 3).map((project) => (
               <ProjectCard key={project.slug} project={project} viewMode="grid" />
             ))}
           </div>
 
           <div className="featured-actions-row">
             <Link to="/projects" className="btn btn-secondary">
-              <span>View All Projects in Archive</span>
+              <span>View all projects</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
@@ -274,33 +280,18 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 6.6 Achievements, Patents and Certifications */}
+      {/* 6.6 Patents and Certifications */}
       <section id="achievements" className="section" ref={achievementsRef}>
         <div className="container">
           <div className="section-header">
-            <span className="section-label">04 // Recognition</span>
+            <span className="section-label">04 // RECOGNITION</span>
             <h2 className="section-title">
-              Achievements, <span className="text-gradient">Patents & Certifications</span>
+              <span className="text-gradient">Patents & Certifications</span>
             </h2>
           </div>
 
-          <div className="achievements-grid">
-            {/* Column 1: Achievements */}
-            <div className="achievement-column">
-              <h3 className="achievement-column-title">Achievements</h3>
-              {achievementsData.achievements.map((item) => (
-                <div key={item.id} className="compact-item-card">
-                  <div className="compact-item-meta">
-                    <span className="compact-item-issuer">{item.issuer}</span>
-                    <span>{item.date}</span>
-                  </div>
-                  <h4 className="compact-item-title">{item.title}</h4>
-                  <p className="compact-item-desc">{item.description}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Column 2: Patents and Research */}
+          <div className="patents-certifications-grid">
+            {/* Column 1: Patents & Research */}
             <div className="achievement-column">
               <h3 className="achievement-column-title">Patents & Research</h3>
               {achievementsData.patents.map((item) => (
@@ -315,7 +306,7 @@ export function HomePage() {
               ))}
             </div>
 
-            {/* Column 3: Certifications */}
+            {/* Column 2: Certifications */}
             <div className="achievement-column">
               <h3 className="achievement-column-title">Certifications</h3>
               {achievementsData.certifications.map((item) => (
