@@ -1,0 +1,83 @@
+/* Covers only the sky: the top 78% of the hero (same value as the Horizon Bloom `horizon`). */
+.meteors {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 78%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.meteor {
+  position: absolute;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.meteor-streak {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  pointer-events: none;
+  animation: meteorFly 5.5s linear infinite;
+  will-change: transform, opacity;
+}
+
+.meteor-head {
+  position: absolute;
+  top: -1.5px;
+  left: -1.5px;
+  width: 3.5px;
+  height: 3.5px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 
+    0 0 4px 1px #ffffff,
+    0 0 10px 2px rgba(255, 170, 90, 0.95),
+    0 0 20px 4px rgba(255, 122, 26, 0.6);
+  pointer-events: none;
+}
+
+.meteor-tail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, #ffffff 0%, rgba(255, 180, 90, 0.9) 20%, rgba(255, 122, 26, 0.45) 60%, transparent 100%);
+  filter: drop-shadow(0 0 4px rgba(255, 170, 90, 0.8));
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes meteorFly {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-600px);
+    opacity: 0;
+  }
+}
+
+.meteors.is-paused .meteor-streak {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meteors {
+    display: none;
+  }
+}

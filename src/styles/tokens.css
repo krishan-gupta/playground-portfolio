@@ -16,7 +16,6 @@
 
   /* Gradients */
   --gradient-accent: linear-gradient(90deg, var(--accent), var(--accent-2));
-  --gradient-hero-glow: radial-gradient(ellipse 80% 50% at 50% 100%, rgba(255, 122, 26, 0.3) 0%, rgba(255, 179, 71, 0.1) 40%, rgba(10, 9, 8, 0) 80%);
   --gradient-card: linear-gradient(180deg, rgba(28, 23, 19, 0.6) 0%, rgba(20, 17, 15, 0.8) 100%);
 
   /* Typography */

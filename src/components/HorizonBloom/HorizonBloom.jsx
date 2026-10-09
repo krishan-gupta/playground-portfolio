@@ -1,22 +1,31 @@
 import React, { useEffect, useRef, useState, useCallback, useImperativeHandle, forwardRef } from 'react';
 import './HorizonBloom.css';
 
+function hexToRgb(hex, fallback = { r: 240, g: 138, b: 60 }) {
+  if (!hex) return fallback;
+  let h = String(hex).replace('#', '');
+  if (h.length === 3) h = h.replace(/./g, c => c + c);
+  const n = parseInt(h.slice(0, 6), 16);
+  if (Number.isNaN(n)) return fallback;
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
+
 export const HorizonBloom = forwardRef(function HorizonBloom(
   {
-    colors = ['#FF9A3D', '#8A3A00'],
+    colors = ['#F59A48', '#5A2C00'],
     backgroundColor = '#0a0908',
-    horizon = 0.72,
+    horizon = 0.78,
     curvature = 1.0,
-    sunPosition = 0.08,
-    sunrise = 1.0,
-    flare = 1.0,
+    sunPosition = 0.1,
+    sunrise = 0.65,
+    flare = 0.6,
     rim = 1.0,
-    atmosphere = 1.0,
-    thickness = 1.0,
+    atmosphere = 0.55,
+    thickness = 0.8,
     stars = 0.5,
-    airglow = 0.5,
-    clouds = 0.5,
-    bloom = 0.5,
+    airglow = 0.35,
+    clouds = 0.35,
+    bloom = 0.35,
     grain = 0.25,
     aurora = 0.0,
     autoAurora = false,
@@ -52,6 +61,18 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
     replay
   }), [replay]);
 
+  const pausedRef = useRef(paused);
+  const loopIdRef = useRef(null);
+  const resumeLoopRef = useRef(null);
+  const starsRef = useRef([]);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+    if (!paused && resumeLoopRef.current && !loopIdRef.current) {
+      resumeLoopRef.current();
+    }
+  }, [paused]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
@@ -63,17 +84,16 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const effectiveDpr = propDpr || (window.innerWidth < 768 ? 1.5 : 2.0);
 
-    let animationFrameId;
     let width = 0;
     let height = 0;
-    let starList = [];
 
-    // Initialize stars
+    // Initialize stars (preserve if already populated to prevent jump)
     const initStars = (w, h) => {
+      if (starsRef.current.length > 0) return;
       const count = Math.floor(180 * stars);
-      starList = [];
+      const list = [];
       for (let i = 0; i < count; i++) {
-        starList.push({
+        list.push({
           x: Math.random() * w,
           y: Math.random() * (h * horizon), // stars only above planet
           size: Math.random() * 1.6 + 0.3,
@@ -82,6 +102,7 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
           phase: Math.random() * Math.PI * 2
         });
       }
+      starsRef.current = list;
     };
 
     const handleResize = () => {
@@ -116,12 +137,15 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
     let lastTime = performance.now();
 
     const render = (now) => {
+      if (pausedRef.current || prefersReducedMotion) {
+        loopIdRef.current = null;
+        return;
+      }
+
       const dt = Math.min((now - lastTime) / 1000, 0.1);
       lastTime = now;
 
-      if (!paused && !prefersReducedMotion) {
-        animStateRef.current.time += dt * speed;
-      }
+      animStateRef.current.time += dt * speed;
 
       const state = animStateRef.current;
 
@@ -141,7 +165,8 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
       ctx.fillRect(0, 0, width, height);
 
       // 1. Render Starfield
-      if (stars > 0) {
+      const starList = starsRef.current;
+      if (stars > 0 && starList) {
         ctx.save();
         for (let i = 0; i < starList.length; i++) {
           const star = starList[i];
@@ -168,25 +193,30 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
       const planetCenterX = width * 0.5 + offsetX;
       const planetCenterY = planetY + planetRadius;
 
+      const c0 = hexToRgb(colors[0], { r: 240, g: 138, b: 60 });
+      const c1 = hexToRgb(colors[1], { r: 74, g: 36, b: 0 });
+
       // Sun coordinate on the horizon arc
-      const sunAngleOffset = (sunPosition - 0.5) * 0.6;
+      // sunPosition: 0 is center, positive is right of center (0.1 is just right of center)
+      const sunAngleOffset = sunPosition * 0.55;
       const sunX = planetCenterX + Math.sin(sunAngleOffset) * planetRadius;
       const sunY = planetCenterY - Math.cos(sunAngleOffset) * planetRadius;
 
-      // 2. Airglow & upper atmosphere diffusion
+      // 2. Airglow & upper atmosphere diffusion (subtle, delicate dark-amber halo)
       if (atmosphere > 0) {
         ctx.save();
+        const atmoRadius = width * (compact ? 0.38 : 0.52);
         const atmoGrad = ctx.createRadialGradient(
           sunX,
-          sunY + 20,
-          10,
+          sunY + 10,
+          5,
           sunX,
           sunY,
-          width * (compact ? 0.75 : 0.95)
+          atmoRadius
         );
-        atmoGrad.addColorStop(0, `rgba(255, 154, 61, ${0.45 * currentSunrise * atmosphere})`);
-        atmoGrad.addColorStop(0.25, `rgba(215, 95, 15, ${0.25 * currentSunrise * atmosphere})`);
-        atmoGrad.addColorStop(0.55, `rgba(138, 58, 0, ${0.08 * currentSunrise * atmosphere})`);
+        atmoGrad.addColorStop(0, `rgba(${c0.r}, ${c0.g}, ${c0.b}, ${0.32 * currentSunrise * atmosphere})`);
+        atmoGrad.addColorStop(0.35, `rgba(${c1.r}, ${c1.g}, ${c1.b}, ${0.16 * currentSunrise * atmosphere})`);
+        atmoGrad.addColorStop(0.7, `rgba(${c1.r}, ${c1.g}, ${c1.b}, ${0.04 * currentSunrise * atmosphere})`);
         atmoGrad.addColorStop(1, 'rgba(10, 9, 8, 0)');
 
         ctx.fillStyle = atmoGrad;
@@ -197,29 +227,28 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
       // 3. Clouds & subtle atmospheric ripples
       if (clouds > 0) {
         ctx.save();
-        ctx.globalAlpha = 0.12 * clouds * currentSunrise;
-        const driftX = (state.time * 8 * drift) % width;
-        const cloudGrad = ctx.createLinearGradient(0, planetY - 80, 0, planetY + 20);
+        ctx.globalAlpha = 0.08 * clouds * currentSunrise;
+        const driftX = (state.time * 6 * drift) % width;
+        const cloudGrad = ctx.createLinearGradient(0, planetY - 60, 0, planetY + 15);
         cloudGrad.addColorStop(0, 'rgba(255, 179, 71, 0)');
-        cloudGrad.addColorStop(0.6, 'rgba(255, 154, 61, 0.4)');
+        cloudGrad.addColorStop(0.6, `rgba(${c0.r}, ${c0.g}, ${c0.b}, 0.25)`);
         cloudGrad.addColorStop(1, 'rgba(10, 9, 8, 0)');
         ctx.fillStyle = cloudGrad;
-        ctx.fillRect(0, planetY - 90, width, 110);
+        ctx.fillRect(0, planetY - 70, width, 90);
         ctx.restore();
       }
 
-      // 4. Sun Flare & Corona burst where light breaks over the horizon
+      // 4. Sun Flare & Corona burst where light breaks over the horizon (subtle small halo)
       if (flare > 0) {
         ctx.save();
         ctx.globalCompositeOperation = 'screen';
 
-        // Broad sun flare glow
-        const flareRadius = width * (compact ? 0.35 : 0.55) * flare * currentSunrise;
+        // Broad sun flare glow (small, subtle halo)
+        const flareRadius = width * (compact ? 0.15 : 0.22) * flare * currentSunrise;
         const sunGlow = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, flareRadius);
-        sunGlow.addColorStop(0, 'rgba(255, 250, 230, 0.95)');
-        sunGlow.addColorStop(0.08, 'rgba(255, 215, 140, 0.8)');
-        sunGlow.addColorStop(0.25, `rgba(255, 154, 61, ${0.65 * currentSunrise})`);
-        sunGlow.addColorStop(0.55, `rgba(180, 60, 0, ${0.25 * currentSunrise})`);
+        sunGlow.addColorStop(0, 'rgba(255, 252, 245, 0.95)');
+        sunGlow.addColorStop(0.12, `rgba(${c0.r}, ${c0.g}, ${c0.b}, ${0.65 * currentSunrise})`);
+        sunGlow.addColorStop(0.45, `rgba(${c1.r}, ${c1.g}, ${c1.b}, ${0.22 * currentSunrise})`);
         sunGlow.addColorStop(1, 'rgba(10, 9, 8, 0)');
 
         ctx.fillStyle = sunGlow;
@@ -227,15 +256,15 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
         ctx.arc(sunX, sunY, flareRadius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Anamorphic horizontal lens flare streak
-        const streakWidth = width * 0.7 * flare * currentSunrise;
-        const streakHeight = 4 * thickness;
+        // Anamorphic horizontal lens flare streak (delicate, crisp)
+        const streakWidth = width * 0.32 * flare * currentSunrise;
+        const streakHeight = 2.5 * thickness;
         const streakGrad = ctx.createLinearGradient(sunX - streakWidth * 0.5, sunY, sunX + streakWidth * 0.5, sunY);
-        streakGrad.addColorStop(0, 'rgba(255, 154, 61, 0)');
-        streakGrad.addColorStop(0.4, 'rgba(255, 215, 140, 0.45)');
-        streakGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.9)');
-        streakGrad.addColorStop(0.6, 'rgba(255, 215, 140, 0.45)');
-        streakGrad.addColorStop(1, 'rgba(255, 154, 61, 0)');
+        streakGrad.addColorStop(0, `rgba(${c0.r}, ${c0.g}, ${c0.b}, 0)`);
+        streakGrad.addColorStop(0.4, `rgba(${c0.r}, ${c0.g}, ${c0.b}, 0.35)`);
+        streakGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.85)');
+        streakGrad.addColorStop(0.6, `rgba(${c0.r}, ${c0.g}, ${c0.b}, 0.35)`);
+        streakGrad.addColorStop(1, `rgba(${c0.r}, ${c0.g}, ${c0.b}, 0)`);
 
         ctx.fillStyle = streakGrad;
         ctx.fillRect(sunX - streakWidth * 0.5, sunY - streakHeight * 0.5, streakWidth, streakHeight);
@@ -256,8 +285,8 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
         planetCenterY,
         planetRadius
       );
-      planetFaceGrad.addColorStop(0, 'rgba(22, 18, 14, 0.98)');
-      planetFaceGrad.addColorStop(0.15, 'rgba(14, 12, 10, 0.99)');
+      planetFaceGrad.addColorStop(0, 'rgba(20, 16, 12, 0.98)');
+      planetFaceGrad.addColorStop(0.15, 'rgba(12, 10, 8, 0.99)');
       planetFaceGrad.addColorStop(0.5, backgroundColor);
       planetFaceGrad.addColorStop(1, backgroundColor);
 
@@ -271,10 +300,10 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
         // Layer A: Soft outer rim glow
         ctx.beginPath();
         ctx.arc(planetCenterX, planetCenterY, planetRadius, Math.PI * 1.15, Math.PI * 1.85);
-        ctx.strokeStyle = colors[0] || '#FF9A3D';
-        ctx.lineWidth = 3.5 * thickness;
-        ctx.shadowColor = colors[0] || '#FF9A3D';
-        ctx.shadowBlur = 18 * bloom * currentSunrise;
+        ctx.strokeStyle = colors[0] || '#F08A3C';
+        ctx.lineWidth = 2.4 * thickness;
+        ctx.shadowColor = colors[0] || '#F08A3C';
+        ctx.shadowBlur = 12 * bloom * currentSunrise;
         ctx.globalAlpha = 0.85 * rim * currentSunrise;
         ctx.stroke();
 
@@ -283,10 +312,39 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
         ctx.arc(planetCenterX, planetCenterY, planetRadius, Math.PI * 1.15, Math.PI * 1.85);
         ctx.strokeStyle = 'rgba(255, 250, 240, 0.95)';
         ctx.lineWidth = 1.0 * thickness;
-        ctx.shadowColor = '#FFE2B7';
+        ctx.shadowColor = colors[0] || '#F59A48';
         ctx.shadowBlur = 8 * bloom * currentSunrise;
         ctx.globalAlpha = 0.95 * rim * currentSunrise;
         ctx.stroke();
+
+        // Layer C: Visible sun glow burst breaking right over the rim
+        if (flare > 0) {
+          const coreRadius = Math.max(16, width * 0.055) * flare * currentSunrise;
+          const sunPointGlow = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, coreRadius);
+          sunPointGlow.addColorStop(0, 'rgba(255, 255, 255, 0.98)');
+          sunPointGlow.addColorStop(0.18, 'rgba(255, 240, 200, 0.92)');
+          sunPointGlow.addColorStop(0.45, `rgba(${c0.r}, ${c0.g}, ${c0.b}, ${0.65 * currentSunrise})`);
+          sunPointGlow.addColorStop(0.75, `rgba(${c1.r}, ${c1.g}, ${c1.b}, ${0.25 * currentSunrise})`);
+          sunPointGlow.addColorStop(1, 'rgba(10, 9, 8, 0)');
+
+          ctx.fillStyle = sunPointGlow;
+          ctx.beginPath();
+          ctx.arc(sunX, sunY, coreRadius, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Anamorphic horizontal lens streak right at the sun break point
+          const streakW = width * 0.42 * flare * currentSunrise;
+          const streakH = 3 * thickness;
+          const streakGrad = ctx.createLinearGradient(sunX - streakW * 0.5, sunY, sunX + streakW * 0.5, sunY);
+          streakGrad.addColorStop(0, `rgba(${c0.r}, ${c0.g}, ${c0.b}, 0)`);
+          streakGrad.addColorStop(0.35, `rgba(${c0.r}, ${c0.g}, ${c0.b}, 0.5)`);
+          streakGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.95)');
+          streakGrad.addColorStop(0.65, `rgba(${c0.r}, ${c0.g}, ${c0.b}, 0.5)`);
+          streakGrad.addColorStop(1, `rgba(${c0.r}, ${c0.g}, ${c0.b}, 0)`);
+
+          ctx.fillStyle = streakGrad;
+          ctx.fillRect(sunX - streakW * 0.5, sunY - streakH * 0.5, streakW, streakH);
+        }
         ctx.restore();
       }
 
@@ -304,19 +362,32 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
         ctx.restore();
       }
 
-      if (!paused && !prefersReducedMotion) {
-        animationFrameId = requestAnimationFrame(render);
+      if (!pausedRef.current && !prefersReducedMotion) {
+        loopIdRef.current = requestAnimationFrame(render);
+      } else {
+        loopIdRef.current = null;
       }
     };
 
-    animationFrameId = requestAnimationFrame(render);
+    resumeLoopRef.current = () => {
+      if (loopIdRef.current) return;
+      lastTime = performance.now();
+      loopIdRef.current = requestAnimationFrame(render);
+    };
+
+    if (!pausedRef.current && !prefersReducedMotion) {
+      loopIdRef.current = requestAnimationFrame(render);
+    }
 
     return () => {
       window.removeEventListener('resize', handleResize);
       if (interactive) {
         window.removeEventListener('mousemove', handleMouseMove);
       }
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      if (loopIdRef.current) {
+        cancelAnimationFrame(loopIdRef.current);
+        loopIdRef.current = null;
+      }
     };
   }, [
     colors,
@@ -340,7 +411,6 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
     drift,
     parallax,
     intro,
-    paused,
     propDpr,
     interactive,
     compact

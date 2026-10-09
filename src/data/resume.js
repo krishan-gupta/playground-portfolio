@@ -113,63 +113,84 @@ export const education = [
 export const skillCategories = [
   {
     id: 'languages',
-    title: 'Languages and Core',
+    title: 'Languages & Core',
     skills: [
       { name: 'Python' },
       { name: 'C' },
       { name: 'C++' },
+      { name: 'Java' },
       { name: 'JavaScript' },
-      { name: 'Java (learning)' }
+      { name: 'SQL' },
+      { name: 'R' },
+      { name: 'MATLAB' }
     ]
   },
   {
     id: 'frontend',
-    title: 'Frontend and Web',
+    title: 'Frontend & Web',
     skills: [
-      { name: 'HTML5' },
-      { name: 'CSS3' },
-      { name: 'React (basics)' },
-      { name: 'Vite' },
-      { name: 'Vercel' }
+      { name: 'HTML' },
+      { name: 'CSS' },
+      { name: 'JavaScript' },
+      { name: 'React' },
+      { name: 'Firebase' }
     ]
   },
   {
     id: 'aiml',
-    title: 'AI / ML',
+    title: 'AI / ML & Data Science',
     skills: [
-      { name: 'Claude API (Text & Vision)' },
-      { name: 'U-Net Colorization Pipelines' },
-      { name: 'Embeddings & Semantic Search (in progress)' },
-      { name: 'Edge Impulse' }
+      { name: 'Neural Networks' },
+      { name: 'Generative Imaging' },
+      { name: 'Prompt Engineering' },
+      { name: 'NumPy' },
+      { name: 'Pandas' },
+      { name: 'MATLAB' }
     ]
   },
   {
     id: 'cloud',
-    title: 'Cloud, Backend and IoT',
+    title: 'Cloud, IoT & Tools',
     skills: [
       { name: 'AWS Fundamentals' },
-      { name: 'Azure Fundamentals' },
-      { name: 'GCP Fundamentals' },
       { name: 'Firebase' },
-      { name: 'Flask' },
-      { name: 'SQLite' },
       { name: 'ESP32' },
-      { name: 'Arduino IDE' },
+      { name: 'Arduino' },
+      { name: 'Git' },
       { name: 'GitHub' }
     ]
   }
 ];
 
-export const additionalTech = [
-  'Fastify', 'PostgreSQL', 'Redis', 'Socket.io (DhobiTrack backend plan)', 'Capacitor.js', 'TypeScript', 'Tailwind', 'LaTeX'
+export const csFundamentals = [
+  'Operating Systems',
+  'Database Management Systems (DBMS)',
+  'Data Structures & Algorithms (DSA)',
+  'Object-Oriented Programming (OOP)',
+  'SQL'
 ];
 
-export const csFundamentals = [
-  'Operating Systems', 'Database Management Systems', 'Data Structures (improving)'
+export const additionalTech = [
+  'Git',
+  'GitHub',
+  'Arduino',
+  'ESP32',
+  'NumPy',
+  'Pandas',
+  'MATLAB',
+  'R',
+  'Fastify',
+  'PostgreSQL',
+  'Redis'
 ];
 
 export const areasOfInterest = [
-  'AI/ML Engineering', 'Full-Stack Development', 'Cloud', 'Research and Patents', 'Hackathons'
+  'AI / ML & Neural Networks',
+  'Generative Imaging',
+  'Prompt Engineering',
+  'Full-Stack Web Development',
+  'Embedded Systems & IoT',
+  'Research & Patents'
 ];
 
 export function getExperiencesForTrack(trackId) {

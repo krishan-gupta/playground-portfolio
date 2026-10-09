@@ -38,10 +38,22 @@ export function ResumePage({ track: initialTrack }) {
         />
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <span className="section-label">SPECIALIZATION // RESUME</span>
-          <h1 className="resume-title">
-            <TechText text="Resume" />
-            <span className="text-gradient"> Branches</span>
-          </h1>
+          <h1 className="sr-only">Resume</h1>
+          <div className="page-title-tech" aria-hidden="true">
+            <TechText
+              text="Resume"
+              fontFamily="Outfit, sans-serif"
+              fontWeight={800}
+              fontSize={96}
+              letterSpacing={-0.04}
+              color="#f5efe8"
+              accentColor="#ff7a1a"
+              reveal="letter"
+              specks={8}
+              labels={false}
+              sweep={false}
+            />
+          </div>
           <p className="resume-subtitle">
             A dynamic branched curriculum vitae tailored to distinct engineering domains and research specializations.
           </p>

@@ -18,6 +18,14 @@
   margin-bottom: 1rem;
 }
 
+.page-title-tech {
+  position: relative;
+  width: min(90vw, 600px);
+  height: 140px;
+  margin-inline: auto;
+  margin-bottom: 0.5rem;
+}
+
 .projects-subtitle {
   max-width: 650px;
   margin: 0 auto;

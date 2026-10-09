@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from '../../router';
 import { HorizonBloom } from '../../components/HorizonBloom/HorizonBloom';
+import Meteors from '../../components/Meteors/Meteors';
 import { TechText } from '../../components/TechText/TechText';
 import { ProjectCard } from '../../components/ProjectCard/ProjectCard';
-import { getFeaturedProjects } from '../../data/projects';
+import { projects, getFeaturedProjects } from '../../data/projects';
 import { skillCategories, additionalTech, csFundamentals, areasOfInterest } from '../../data/resume';
 import { achievementsData } from '../../data/achievements';
 import { useReveal } from '../../hooks/useReveal';
@@ -30,12 +31,76 @@ export function HomePage() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const horizonRef = useRef(null);
+  const heroRef = useRef(null);
+  const [isBloomPaused, setIsBloomPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < 640 : false
+  );
 
   const [aboutRef] = useReveal();
   const [skillsRef] = useReveal();
   const [featuredRef] = useReveal();
   const [achievementsRef] = useReveal();
   const [contactRef] = useReveal();
+
+  useEffect(() => {
+    const motionQuery = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    if (motionQuery) {
+      setReducedMotion(motionQuery.matches);
+      const onMotionChange = (e) => setReducedMotion(e.matches);
+      motionQuery.addEventListener('change', onMotionChange);
+      return () => motionQuery.removeEventListener('change', onMotionChange);
+    }
+  }, []);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const updateScrollProgress = () => {
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      const vh = window.innerHeight || 1;
+      const p = Math.min(Math.max(scrollY / vh, 0), 1);
+
+      if (heroRef.current) {
+        heroRef.current.style.setProperty('--p', p.toFixed(4));
+        const cueOpacity = Math.max(0, 1 - p / 0.3);
+        heroRef.current.style.setProperty('--cue-opacity', cueOpacity.toFixed(4));
+        heroRef.current.style.setProperty('--hero-pointer-events', p > 0.9 ? 'none' : 'auto');
+        heroRef.current.style.setProperty('--cue-pointer-events', p >= 0.3 ? 'none' : 'auto');
+      }
+
+      if (aboutRef.current) {
+        const arcOpacity = Math.min(p / 0.45, 1);
+        aboutRef.current.style.setProperty('--arc-opacity', arcOpacity.toFixed(4));
+      }
+
+      const shouldPause = p >= 0.95;
+      setIsBloomPaused((prev) => (prev !== shouldPause ? shouldPause : prev));
+
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrollProgress);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateScrollProgress();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [aboutRef]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -48,32 +113,39 @@ export function HomePage() {
 
   return (
     <div className="home-page-wrapper">
-      {/* 6.2 Home: Hero */}
-      <section id="hero" className="hero-section">
+      {/* 6.2 Home: Hero (pinned 100svh card under About) */}
+      <section id="hero" className="hero-section" ref={heroRef}>
         {/* Horizon Bloom: ReactBits Pro Sunrise breaking over planet edge */}
         <HorizonBloom
           ref={horizonRef}
-          colors={['#FF9A3D', '#8A3A00']}
+          colors={['#F59A48', '#5A2C00']}
           backgroundColor="#0a0908"
-          horizon={0.72}
+          horizon={0.78}
           curvature={0.7}
-          sunPosition={0.08}
-          sunrise={1.0}
-          flare={1.0}
+          sunPosition={0.1}
+          sunrise={0.65}
+          flare={0.6}
           rim={1.0}
-          atmosphere={1.0}
-          thickness={1.0}
+          atmosphere={0.55}
+          thickness={0.8}
           stars={0.5}
-          airglow={0.5}
-          clouds={0.5}
-          bloom={0.5}
+          airglow={0.35}
+          clouds={0.35}
+          bloom={0.35}
           grain={0.25}
           aurora={0}
           autoAurora={false}
           parallax={0.5}
           intro={true}
           interactive={true}
+          paused={isBloomPaused}
         >
+          {/* Dark overlay over bloom during scroll-over */}
+          <div className="hero-dark-overlay" aria-hidden="true" />
+
+          {/* 6.2b Hero meteor shower (subtle shooting-star streaks in top 78% sky) */}
+          <Meteors paused={isBloomPaused} />
+
           {/* Corner mono captions */}
           <div className="hero-caption hero-caption-tl" aria-hidden="true">
             SYS.LOC // CHENNAI<br />
@@ -85,20 +157,68 @@ export function HomePage() {
           </div>
 
           <div className="hero-content">
-            <div className="hero-badge">
-              <span className="hero-badge-dot" />
-              <span className="hero-badge-text">PORTFOLIO // MULTI-TRACK</span>
-            </div>
+            <div className="hero-sky-block">
+              <div className="hero-badge">
+                <span className="hero-badge-dot" />
+                <span className="hero-badge-text">PORTFOLIO // MULTI-TRACK</span>
+              </div>
 
-            <div className="hero-title-box" onClick={(e) => e.stopPropagation()}>
-              <h1 style={{ margin: 0, padding: 0 }}>
-                <TechText text="Krishan Gupta" isHeroTitle={true} />
-              </h1>
-            </div>
+              <h1 className="sr-only">Krishan Gupta</h1>
+              {isMobile ? (
+                <div className="hero-name-stacked" aria-hidden="true">
+                  <div className="hero-name-stacked-line">
+                    <TechText
+                      text="Krishan"
+                      fontFamily="Outfit, sans-serif"
+                      fontWeight={800}
+                      fontSize={120}
+                      letterSpacing={-0.04}
+                      color="#f5efe8"
+                      accentColor="#ff7a1a"
+                      reveal="letter"
+                      specks={reducedMotion ? 0 : 15}
+                      speed={0.41}
+                      sweep={!isBloomPaused && !reducedMotion}
+                    />
+                  </div>
+                  <div className="hero-name-stacked-line">
+                    <TechText
+                      text="Gupta"
+                      fontFamily="Outfit, sans-serif"
+                      fontWeight={800}
+                      fontSize={120}
+                      letterSpacing={-0.04}
+                      color="#f5efe8"
+                      accentColor="#ff7a1a"
+                      reveal="letter"
+                      specks={reducedMotion ? 0 : 15}
+                      speed={0.41}
+                      sweep={!isBloomPaused && !reducedMotion}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="hero-name" aria-hidden="true">
+                  <TechText
+                    text="Krishan Gupta"
+                    fontFamily="Outfit, sans-serif"
+                    fontWeight={800}
+                    fontSize={168}
+                    letterSpacing={-0.04}
+                    color="#f5efe8"
+                    accentColor="#ff7a1a"
+                    reveal="letter"
+                    specks={reducedMotion ? 0 : 15}
+                    speed={0.41}
+                    sweep={!isBloomPaused && !reducedMotion}
+                  />
+                </div>
+              )}
 
-            <p className="hero-subtitle">
-              B.Tech CSE (AI & ML) student at VIT Chennai, building practical tools and exploring AI applications.
-            </p>
+              <p className="hero-subtitle">
+                B.Tech CSE (AI & ML) student at VIT Chennai, building practical tools and exploring AI applications.
+              </p>
+            </div>
 
             <div className="hero-buttons" onClick={(e) => e.stopPropagation()}>
               <Link to="/projects" className="btn btn-primary">
@@ -133,11 +253,19 @@ export function HomePage() {
         </HorizonBloom>
       </section>
 
-      {/* 6.3 About The Journey */}
-      <section id="about" className="section" ref={aboutRef}>
+      {/* 6.2a Hero to About transition (scroll-over card) & 6.3 About The Journey */}
+      <section id="about" className="section about-section" ref={aboutRef}>
+        {/* Arc glow at the card's top edge */}
+        <div className="about-arc-glow-wrapper" aria-hidden="true">
+          <div className="about-arc-bloom-ambient" />
+          <div className="about-arc-secondary" />
+          <div className="about-arc-primary" />
+          <div className="about-arc-core-highlight" />
+        </div>
+
         <div className="container">
           <div className="section-header">
-            <span className="section-label">01 // Profile</span>
+            <span className="section-label">01 // PROFILE</span>
             <h2 className="section-title">
               About <span className="text-gradient">The Journey</span>
             </h2>
@@ -160,18 +288,21 @@ export function HomePage() {
 
             <div className="about-text-content">
               <p className="about-lead">
-                I'm a second-year B.Tech Computer Science student (AI & ML specialization) at VIT Chennai, graduating in May 2029. I like building practical tools and exploring applications of AI, and I take part in competitive hackathons.
+                I'm Krishan, a second-year Computer Science student at VIT Chennai, specializing in AI & ML. I like building things people can actually use: a laundry platform designed for 15,000+ students, a noise monitor built on an ESP32, and a hackathon concept for editing text inside photos without leaving your phone.
               </p>
               <p className="about-bio">
-                On campus I lead and build: I'm Management Lead at NEXUS VIT, Technical Specialist at CloudOps VITC and Web Developer at AWS Cloud Club VIT Chennai. My profile is moving from frontend work toward AI/ML and research, with a goal of landing a paid internship and building a strong research and patents record.
+                I started in frontend and I'm moving toward AI/ML and research. I'm Management Lead at NEXUS VIT, where I coordinate events like the Striver talk show, and the web developer for AWS Cloud Club VIT Chennai. I'm also a co-inventor on a patent that has already been transferred to industry.
+              </p>
+              <p className="about-bio">
+                I'm looking for internships and research collaborations.
               </p>
 
-              {/* Real stat tiles from section 13 */}
+              {/* Four stat tiles from section 13.2 */}
               <div className="about-stats-row">
-                <StatTile target={1100} suffix="+" label="Nexus Forum Attendees Coordinated" />
-                <StatTile target={300} suffix="+" label="AWS Student Builder Sign-ups Driven" />
-                <StatTile target={4} suffix="" label="Certifications & Job Simulations" />
-                <StatTile target={1} suffix="" label="Patent Application (Transferred)" />
+                <StatTile target={projects.length} suffix="" label="Projects" />
+                <StatTile target={1} suffix="" label="Patent filed" />
+                <StatTile target={achievementsData.certifications.length} suffix="" label="Certificates" />
+                <StatTile target={1} suffix="" label="AWS certification passed" />
               </div>
             </div>
           </div>
@@ -290,35 +421,39 @@ export function HomePage() {
             </h2>
           </div>
 
-          <div className="patents-certifications-grid">
-            {/* Column 1: Patents & Research */}
-            <div className="achievement-column">
+          <div className="patents-certifications-wrapper">
+            {/* Row Group 1: Patents & Research (Row-wise, max 2 items per row) */}
+            <div className="recognition-group">
               <h3 className="achievement-column-title">Patents & Research</h3>
-              {achievementsData.patents.map((item) => (
-                <div key={item.id} className="compact-item-card">
-                  <div className="compact-item-meta">
-                    <span className="compact-item-issuer">{item.issuer}</span>
-                    <span>{item.date}</span>
+              <div className="recognition-cards-grid">
+                {achievementsData.patents.map((item) => (
+                  <div key={item.id} className="compact-item-card">
+                    <div className="compact-item-meta">
+                      <span className="compact-item-issuer">{item.issuer}</span>
+                      <span>{item.date}</span>
+                    </div>
+                    <h4 className="compact-item-title">{item.title}</h4>
+                    <p className="compact-item-desc">{item.description}</p>
                   </div>
-                  <h4 className="compact-item-title">{item.title}</h4>
-                  <p className="compact-item-desc">{item.description}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
-            {/* Column 2: Certifications */}
-            <div className="achievement-column">
+            {/* Row Group 2: Certifications (Row-wise, max 2 items per row) */}
+            <div className="recognition-group">
               <h3 className="achievement-column-title">Certifications</h3>
-              {achievementsData.certifications.map((item) => (
-                <div key={item.id} className="compact-item-card">
-                  <div className="compact-item-meta">
-                    <span className="compact-item-issuer">{item.issuer}</span>
-                    <span>{item.date}</span>
+              <div className="recognition-cards-grid">
+                {achievementsData.certifications.map((item) => (
+                  <div key={item.id} className="compact-item-card">
+                    <div className="compact-item-meta">
+                      <span className="compact-item-issuer">{item.issuer}</span>
+                      <span>{item.date}</span>
+                    </div>
+                    <h4 className="compact-item-title">{item.title}</h4>
+                    <p className="compact-item-desc">{item.description}</p>
                   </div>
-                  <h4 className="compact-item-title">{item.title}</h4>
-                  <p className="compact-item-desc">{item.description}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>

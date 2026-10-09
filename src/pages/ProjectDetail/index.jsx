@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from '../../router';
 import { getProjectBySlug, projects } from '../../data/projects';
-import { TechText } from '../../components/TechText/TechText';
 import './ProjectDetail.css';
 
 export function ProjectDetailPage({ slug }) {
@@ -47,7 +46,7 @@ export function ProjectDetailPage({ slug }) {
           </div>
 
           <h1 className="detail-title">
-            <TechText text={project.title} />
+            {project.title}
           </h1>
 
           <div className="detail-sub-meta">

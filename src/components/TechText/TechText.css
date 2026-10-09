@@ -1,124 +1,13 @@
-.tech-text-container {
-  display: inline-block;
+.tech-text {
   position: relative;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
   user-select: none;
-  -webkit-user-select: none;
 }
 
-.tech-text-visual {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-}
-
-.tech-word {
-  display: inline-flex;
-  align-items: baseline;
-  white-space: nowrap;
-}
-
-.tech-space {
-  display: inline;
-}
-
-.tech-letter-wrap {
-  display: inline-block;
-  position: relative;
-  cursor: grab;
-  touch-action: none;
-  padding: 0 1px;
-  will-change: transform;
-}
-
-.tech-char-face {
+.tech-text-canvas {
   display: block;
-  color: var(--text);
-  font-family: var(--font-display);
-  font-weight: 800;
-  transition: color 0.15s ease;
-  position: relative;
-  z-index: 1;
-}
-
-/* Dashed vector outline in --accent */
-.tech-char-outline {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-weight: 800;
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--accent);
-  text-shadow: 0 0 12px rgba(255, 122, 26, 0.7);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 2;
-  transition: opacity 0.2s ease;
-}
-
-/* On hover: reveal glowing dashed vector outline */
-.tech-letter-wrap:hover .tech-char-outline,
-.tech-letter-wrap.tech-hovered .tech-char-outline {
-  opacity: 1;
-  animation: outlinePulse 1.2s infinite ease-in-out;
-}
-
-.tech-letter-wrap:hover .tech-char-face {
-  color: #ffffff;
-  text-shadow: 0 0 16px rgba(255, 179, 71, 0.5);
-}
-
-.tech-letter-wrap.tech-dragging {
-  cursor: grabbing;
-  z-index: 10;
-}
-
-.tech-letter-wrap.tech-dragging .tech-char-outline {
-  opacity: 1;
-  -webkit-text-stroke: 2px var(--accent-2);
-  text-shadow: 0 0 20px rgba(255, 122, 26, 0.9);
-}
-
-.tech-letter-wrap.tech-shifted {
-  filter: drop-shadow(0 4px 12px rgba(255, 122, 26, 0.4));
-}
-
-@keyframes outlinePulse {
-  0%, 100% {
-    opacity: 0.85;
-    filter: drop-shadow(0 0 4px var(--accent));
-  }
-  50% {
-    opacity: 1;
-    filter: drop-shadow(0 0 10px var(--accent-2));
-  }
-}
-
-/* Hero Title Scaling */
-.tech-text-hero {
-  font-size: clamp(3rem, 9vw, 7.5rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-}
-
-.tech-text-static {
-  font-family: var(--font-display);
-  font-weight: 800;
-  color: var(--text);
-}
-
-/* Screen reader only utility */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+  width: 100%;
+  height: 100%;
 }

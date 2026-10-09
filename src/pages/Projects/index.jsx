@@ -39,10 +39,22 @@ export function ProjectsPage() {
         />
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <span className="section-label">ARCHIVE // INDEX</span>
-          <h1 className="projects-title">
-            <TechText text="Projects" />
-            <span className="text-gradient"> Library</span>
-          </h1>
+          <h1 className="sr-only">Projects</h1>
+          <div className="page-title-tech" aria-hidden="true">
+            <TechText
+              text="Projects"
+              fontFamily="Outfit, sans-serif"
+              fontWeight={800}
+              fontSize={96}
+              letterSpacing={-0.04}
+              color="#f5efe8"
+              accentColor="#ff7a1a"
+              reveal="letter"
+              specks={8}
+              labels={false}
+              sweep={false}
+            />
+          </div>
           <p className="projects-subtitle">
             Exploring practical web platforms, embedded IoT prototypes, on-device mobile AI concepts, and semantic search engines.
           </p>

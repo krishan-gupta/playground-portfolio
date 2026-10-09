@@ -17,9 +17,20 @@ export function NotFoundPage() {
         <span className="section-label" style={{ color: 'var(--accent)' }}>
           ERROR // 404
         </span>
-        <h1 style={{ fontSize: 'clamp(3rem, 7vw, 5rem)', margin: '1rem 0' }}>
-          <TechText text="Signal Lost" glitchOnMount={true} />
-        </h1>
+        <h1 className="sr-only">Signal Lost</h1>
+        <div style={{ position: 'relative', width: 'min(90vw, 480px)', height: '110px', margin: '0.5rem auto 1.5rem' }} aria-hidden="true">
+          <TechText
+            text="Signal Lost"
+            fontFamily="Outfit, sans-serif"
+            fontWeight={800}
+            fontSize={76}
+            color="#f5efe8"
+            accentColor="#ff7a1a"
+            specks={8}
+            labels={false}
+            sweep={false}
+          />
+        </div>
         <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '2.5rem', lineHeight: '1.7' }}>
           The requested coordinate does not exist on this horizon. The requested page or route may have decayed or moved.
         </p>

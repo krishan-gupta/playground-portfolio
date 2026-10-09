@@ -17,6 +17,14 @@
   margin-bottom: 1rem;
 }
 
+.page-title-tech {
+  position: relative;
+  width: min(90vw, 600px);
+  height: 140px;
+  margin-inline: auto;
+  margin-bottom: 0.5rem;
+}
+
 .resume-subtitle {
   max-width: 680px;
   margin: 0 auto;
