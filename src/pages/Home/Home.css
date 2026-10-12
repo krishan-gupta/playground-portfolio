@@ -761,7 +761,7 @@
   }
   .about-grid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.5rem;
   }
   .contact-card-wrapper {
     grid-template-columns: 1fr;
@@ -780,38 +780,164 @@
     --max-blur: 6px;
   }
   .hero-sky-block {
-    top: calc(37svh + var(--nav-height) * 0.5);
+    top: calc(34svh + var(--nav-height) * 0.4);
     transform: translate(-50%, -50%);
+    padding: 0 1rem;
+    width: 100%;
   }
-  .about-arc-glow-wrapper {
-    width: 90vw;
-    height: 90px;
+  .hero-badge {
+    padding: 0.35rem 0.9rem;
+    margin-bottom: 0.85rem;
+  }
+  .hero-badge-text {
+    font-size: 0.72rem;
+  }
+  .hero-name-stacked {
+    width: 96vw;
+    margin-bottom: 0.65rem;
+  }
+  .hero-name-stacked-line {
+    width: 96vw;
+    height: clamp(80px, 20vw, 105px);
+  }
+  .hero-subtitle {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    padding: 0 0.5rem;
+    max-width: 90vw;
   }
   .hero-caption {
     display: none;
   }
   .hero-buttons {
-    top: 89svh;
-    flex-direction: column;
-    width: min(88vw, 320px);
-    gap: 0.6rem;
+    top: 83.5svh;
+    flex-direction: row;
+    width: min(92vw, 360px);
+    gap: 0.5rem;
   }
   .hero-buttons .btn {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 0.85rem;
+    flex: 1;
+    padding: 0.68rem 0.6rem;
+    font-size: 0.82rem;
+    white-space: nowrap;
   }
   .hero-scroll-cue {
-    bottom: 0.65rem;
+    bottom: 0.85rem;
+    font-size: 0.68rem;
   }
-  .skills-categories-grid {
+  .about-section {
+    padding-top: 4.5rem;
+  }
+  .about-arc-glow-wrapper {
+    width: 94vw;
+    height: 80px;
+  }
+  .about-grid {
     grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  .about-portrait-frame {
+    max-width: 200px;
+    aspect-ratio: 1;
+    border-radius: var(--radius-lg);
+    margin: 0 auto;
+  }
+  .portrait-icon {
+    width: 46px;
+    height: 46px;
+  }
+  .portrait-placeholder-art {
+    padding: 1rem;
+    gap: 0.4rem;
+  }
+  .portrait-label {
+    font-size: 0.75rem;
+  }
+  .portrait-sublabel {
+    font-size: 0.68rem;
+  }
+  .about-lead {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  .about-bio {
+    font-size: 0.92rem;
+    line-height: 1.65;
   }
   .about-stats-row {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding-top: 1.25rem;
+    margin-top: 1rem;
+  }
+  .stat-tile {
+    padding: 0.85rem 0.5rem;
+  }
+  .stat-number {
+    font-size: 1.65rem;
+  }
+  .stat-label {
+    font-size: 0.68rem;
+  }
+  .skills-categories-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+  .skill-category-card {
+    padding: 1.25rem 1rem;
+  }
+  .skill-category-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.65rem;
+  }
+  .aux-strip-card {
+    padding: 1.25rem 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .skill-tag-pill {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.65rem;
   }
   .featured-projects-grid {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .recognition-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .compact-item-card {
+    padding: 1.15rem 1rem;
+  }
+  .compact-item-title {
+    font-size: 0.94rem;
+  }
+  .compact-item-desc {
+    font-size: 0.84rem;
+  }
+  .contact-card-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem 1.25rem;
+    border-radius: var(--radius-lg);
+  }
+  .contact-heading {
+    font-size: 1.75rem;
+  }
+  .contact-subtext {
+    font-size: 0.92rem;
+    margin-bottom: 1.25rem;
+  }
+  .contact-quick-links {
+    gap: 0.75rem;
+  }
+  .form-input,
+  .form-textarea {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.9rem;
   }
 }
 

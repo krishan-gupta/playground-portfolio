@@ -223,8 +223,16 @@
 
 @media (max-width: 768px) {
   .sling-scroll-top {
-    bottom: 1.5rem;
-    right: 1.25rem;
+    bottom: 1.15rem;
+    right: 0.85rem;
+    gap: 0.25rem;
+    transform: translateY(14px) scale(0.85);
+  }
+  .sling-scroll-top.visible {
+    transform: translateY(0) scale(0.92);
+  }
+  .sling-label {
+    font-size: 0.58rem;
   }
 }
 

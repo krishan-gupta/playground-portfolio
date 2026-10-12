@@ -215,3 +215,16 @@
     gap: 1rem;
   }
 }
+
+@media (max-width: 600px) {
+  .education-header {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .education-card {
+    padding: 1.25rem 1rem;
+  }
+  .track-overview-card {
+    padding: 1.5rem 1rem;
+  }
+}

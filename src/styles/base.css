@@ -147,8 +147,14 @@ code, pre, .mono {
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 0 1.15rem;
+  }
   .section {
-    padding: 4.5rem 0;
+    padding: 3.75rem 0;
+  }
+  .section-header {
+    margin-bottom: 2.25rem;
   }
 }
 

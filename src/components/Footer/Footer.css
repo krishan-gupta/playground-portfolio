@@ -87,9 +87,13 @@
 }
 
 @media (max-width: 820px) {
+  .site-footer {
+    padding: 3.5rem 0 2.5rem;
+  }
   .footer-top {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
   }
   .footer-bottom {
     flex-direction: column;

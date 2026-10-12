@@ -60,7 +60,6 @@
 
 @media (max-width: 768px) {
   .social-dock-wrapper {
-    bottom: 1.5rem;
-    left: 1.25rem;
+    display: none;
   }
 }
