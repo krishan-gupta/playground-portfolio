@@ -8,6 +8,7 @@ import { projects, getFeaturedProjects } from '../../data/projects';
 import { skillCategories, databaseTech, additionalTech, csFundamentals, areasOfInterest } from '../../data/resume';
 import { achievementsData } from '../../data/achievements';
 import { TechIcon } from '../../components/TechIcon/TechIcon';
+import Grainient from '../../components/Grainient/Grainient';
 import { useReveal } from '../../hooks/useReveal';
 import { useCountUp } from '../../hooks/useCountUp';
 import './Home.css';
@@ -241,17 +242,46 @@ export function HomePage() {
         </HorizonBloom>
       </section>
 
-      {/* 6.2a Hero to About transition (scroll-over card) & 6.3 About The Journey */}
-      <section id="about" className="section about-section" ref={aboutRef}>
-        {/* Arc glow at the card's top edge */}
-        <div className="about-arc-glow-wrapper" aria-hidden="true">
-          <div className="about-arc-bloom-ambient" />
-          <div className="about-arc-secondary" />
-          <div className="about-arc-primary" />
-          <div className="about-arc-core-highlight" />
+      {/* 6.2a Hero to About transition (scroll-over card) & Content Deck with Grainient */}
+      <div className="home-content-deck" ref={aboutRef}>
+        <div className="deck-grainient-sticky" aria-hidden="true">
+          <Grainient
+            color1="#2e1709"
+            color2="#0e0a07"
+            color3="#050403"
+            timeSpeed={0.35}
+            warpStrength={1.2}
+            warpFrequency={4.5}
+            warpSpeed={2.2}
+            warpAmplitude={45.0}
+            blendAngle={35.0}
+            blendSoftness={0.12}
+            rotationAmount={450.0}
+            noiseScale={1.8}
+            grainAmount={0.07}
+            grainScale={2.4}
+            grainAnimated={true}
+            contrast={1.16}
+            gamma={1.0}
+            saturation={0.82}
+            zoom={0.9}
+            lightMode={false}
+          />
+          <div className="deck-grainient-vignette" />
         </div>
 
-        <div className="container">
+        <div className="deck-content-inner">
+          {/* Arc glow at the card's top edge */}
+          <div className="about-arc-glow-wrapper" aria-hidden="true">
+            <div className="about-arc-bloom-ambient" />
+            <div className="about-arc-secondary" />
+            <div className="about-arc-primary" />
+            <div className="about-arc-core-highlight" />
+          </div>
+
+          {/* 6.3 About The Journey */}
+          <section id="about" className="section about-section">
+            <div className="container">
           <div className="section-header">
             <span className="section-label">01 // PROFILE</span>
             <h2 className="section-title">
@@ -558,6 +588,8 @@ export function HomePage() {
           </div>
         </div>
       </section>
+        </div>
+      </div>
     </div>
   );
 }
