@@ -87,15 +87,15 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
     let width = 0;
     let height = 0;
 
-    // Initialize stars (preserve if already populated to prevent jump)
-    const initStars = (w, h) => {
+    // Initialize stars with normalized coordinates (0..1) so they seamlessly cover 100% of the canvas at any screen size
+    const initStars = () => {
       if (starsRef.current.length > 0) return;
       const count = Math.floor(180 * stars);
       const list = [];
       for (let i = 0; i < count; i++) {
         list.push({
-          x: Math.random() * w,
-          y: Math.random() * (h * horizon), // stars only above planet
+          u: Math.random(), // 0..1 horizontal ratio
+          v: Math.random(), // 0..1 vertical ratio above horizon
           size: Math.random() * 1.6 + 0.3,
           baseAlpha: Math.random() * 0.7 + 0.2,
           twinkleSpeed: Math.random() * 0.03 + 0.01,
@@ -114,7 +114,7 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       ctx.setTransform(effectiveDpr, 0, 0, effectiveDpr, 0, 0);
-      initStars(width, height);
+      initStars();
     };
 
     handleResize();
@@ -165,16 +165,21 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
       ctx.fillRect(0, 0, width, height);
 
       // 1. Render Starfield
+      const horizonRatio = compact ? 0.6 : horizon;
       const starList = starsRef.current;
       if (stars > 0 && starList) {
         ctx.save();
+        const skyHeight = height * horizonRatio;
         for (let i = 0; i < starList.length; i++) {
           const star = starList[i];
           const twinkle = Math.sin(state.time * star.twinkleSpeed * 60 + star.phase);
           const alpha = Math.max(0.05, Math.min(1.0, star.baseAlpha + twinkle * 0.25));
 
+          const starX = star.u * width;
+          const starY = star.v * skyHeight;
+
           ctx.beginPath();
-          ctx.arc(star.x + state.pointerX * parallax * 4, star.y + state.pointerY * parallax * 4, star.size, 0, Math.PI * 2);
+          ctx.arc(starX + state.pointerX * parallax * 4, starY + state.pointerY * parallax * 4, star.size, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(245, 239, 232, ${alpha * 0.85})`;
           ctx.fill();
         }
@@ -187,7 +192,6 @@ export const HorizonBloom = forwardRef(function HorizonBloom(
 
       // Planet geometry
       // Horizon position (default 72% down the screen, compact is higher)
-      const horizonRatio = compact ? 0.6 : horizon;
       const planetY = height * horizonRatio + offsetY;
       const planetRadius = width * (1.1 / curvature);
       const planetCenterX = width * 0.5 + offsetX;

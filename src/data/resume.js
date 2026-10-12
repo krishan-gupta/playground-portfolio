@@ -113,32 +113,23 @@ export const education = [
 export const skillCategories = [
   {
     id: 'languages',
-    title: 'Languages & Core',
+    title: 'Programming Languages',
+    description: 'Core syntax, algorithms & computational problem solving',
     skills: [
       { name: 'Python' },
-      { name: 'C' },
-      { name: 'C++' },
+      { name: 'C / C++' },
       { name: 'Java' },
       { name: 'JavaScript' },
+      { name: 'TypeScript' },
       { name: 'SQL' },
       { name: 'R' },
       { name: 'MATLAB' }
     ]
   },
   {
-    id: 'frontend',
-    title: 'Frontend & Web',
-    skills: [
-      { name: 'HTML' },
-      { name: 'CSS' },
-      { name: 'JavaScript' },
-      { name: 'React' },
-      { name: 'Firebase' }
-    ]
-  },
-  {
     id: 'aiml',
     title: 'AI / ML & Data Science',
+    description: 'Deep learning, generative vision & predictive models',
     skills: [
       { name: 'Neural Networks' },
       { name: 'Generative Imaging' },
@@ -149,10 +140,24 @@ export const skillCategories = [
     ]
   },
   {
-    id: 'cloud',
-    title: 'Cloud, IoT & Tools',
+    id: 'frontend',
+    title: 'Frontend & Web Development',
+    description: 'Creating modern, responsive & accessible user interfaces',
     skills: [
-      { name: 'AWS Fundamentals' },
+      { name: 'React' },
+      { name: 'JavaScript' },
+      { name: 'HTML5' },
+      { name: 'CSS3' },
+      { name: 'Tailwind CSS' },
+      { name: 'Vite' }
+    ]
+  },
+  {
+    id: 'cloud_iot',
+    title: 'Cloud, IoT & Hardware',
+    description: 'Edge microcontroller systems & cloud-native tooling',
+    skills: [
+      { name: 'AWS' },
       { name: 'Firebase' },
       { name: 'ESP32' },
       { name: 'Arduino' },
@@ -162,11 +167,19 @@ export const skillCategories = [
   }
 ];
 
+export const databaseTech = [
+  'PostgreSQL',
+  'Redis',
+  'MySQL',
+  'Firebase',
+  'DBMS'
+];
+
 export const csFundamentals = [
   'Operating Systems',
-  'Database Management Systems (DBMS)',
   'Data Structures & Algorithms (DSA)',
   'Object-Oriented Programming (OOP)',
+  'DBMS',
   'SQL'
 ];
 
@@ -178,7 +191,6 @@ export const additionalTech = [
   'NumPy',
   'Pandas',
   'MATLAB',
-  'R',
   'Fastify',
   'PostgreSQL',
   'Redis'

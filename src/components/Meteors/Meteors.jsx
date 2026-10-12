@@ -19,20 +19,26 @@ export default function Meteors({
       setMeteors([]);
       return;
     }
-    const width = window.innerWidth;
-    const count = width < 640 ? Math.ceil(number / 2) : number;
-    // Map Cartesian 215deg to CSS rotated angle -35deg so translateX(-dist) streaks from upper-right to lower-left
-    const rotationAngle = -(angle - 180);
+    const generateMeteors = () => {
+      const width = typeof window !== 'undefined' ? window.innerWidth : 1200;
+      const count = width < 640 ? Math.ceil(number / 2) : number;
+      // Map Cartesian 215deg to CSS rotated angle -35deg so translateX(-dist) streaks from upper-right to lower-left
+      const rotationAngle = -(angle - 180);
 
-    setMeteors(
-      Array.from({ length: count }, () => ({
-        top: `${Math.floor(Math.random() * 55)}%`,
-        left: `${Math.floor(Math.random() * (width + 300) - 50)}px`,
-        delay: Number((Math.random() * (maxDelay - minDelay) + minDelay).toFixed(2)),
-        duration: Math.floor(Math.random() * (maxDuration - minDuration) + minDuration),
-        angle: rotationAngle,
-      }))
-    );
+      setMeteors(
+        Array.from({ length: count }, () => ({
+          top: `${Math.floor(Math.random() * 55)}%`,
+          left: `${(Math.random() * 115 - 5).toFixed(2)}%`,
+          delay: Number((Math.random() * (maxDelay - minDelay) + minDelay).toFixed(2)),
+          duration: Math.floor(Math.random() * (maxDuration - minDuration) + minDuration),
+          angle: rotationAngle,
+        }))
+      );
+    };
+
+    generateMeteors();
+    window.addEventListener("resize", generateMeteors);
+    return () => window.removeEventListener("resize", generateMeteors);
   }, [number, minDelay, maxDelay, minDuration, maxDuration, angle]);
 
   return (

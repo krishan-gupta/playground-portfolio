@@ -55,6 +55,7 @@ const TechText = ({
   draggable = true,
   sweep = true,
   speed = 1,
+  sweepRange = null,
   className = '',
   style
 }) => {
@@ -84,7 +85,8 @@ const TechText = ({
       labels,
       draggable,
       sweep,
-      speed
+      speed,
+      sweepRange
     };
     wakeRef.current();
   });
@@ -471,33 +473,72 @@ const TechText = ({
         const lastX = hasGlyphs ? (glyphs[glyphs.length - 1].box.x1 + glyphs[glyphs.length - 1].box.x2) / 2 : view.right;
         const centerY = hasGlyphs ? (glyphs[0].box.y1 + glyphs[0].box.y2) / 2 : (view.top + view.bottom) / 2;
 
-        const cycleDuration = 5.6;
-        const cycleProgress = (clock % cycleDuration) / cycleDuration;
+        if (s.sweepRange && Array.isArray(s.sweepRange)) {
+          const [rStart, rEnd] = s.sweepRange;
+          const rangeSpan = Math.max(0.001, rEnd - rStart);
+          const cycleDuration = 6.4;
+          const cycleProgress = ((now * 0.001 * s.speed) % cycleDuration) / cycleDuration;
 
-        if (cycleProgress < 0.72) {
-          // 1. Forward sweep from first letter to last letter
-          const u = cycleProgress / 0.72;
-          targetX = firstX + (lastX - firstX) * u;
-          targetY = centerY;
-          sweepVisible = true;
-        } else if (cycleProgress < 0.82) {
-          // 2. Dwell on last letter
-          targetX = lastX;
-          targetY = centerY;
-          sweepVisible = true;
-        } else if (cycleProgress < 0.94) {
-          // 3. Vanish on last letter (frame & outline fade out without reversing)
-          targetX = lastX;
-          targetY = centerY;
-          sweepVisible = false;
+          if (cycleProgress >= rStart && cycleProgress < rEnd) {
+            const localProgress = (cycleProgress - rStart) / rangeSpan;
+            if (localProgress < 0.72) {
+              const u = localProgress / 0.72;
+              targetX = firstX + (lastX - firstX) * u;
+              targetY = centerY;
+              sweepVisible = true;
+            } else if (localProgress < 0.84) {
+              targetX = lastX;
+              targetY = centerY;
+              sweepVisible = true;
+            } else if (localProgress < 0.94) {
+              targetX = lastX;
+              targetY = centerY;
+              sweepVisible = false;
+            } else {
+              targetX = firstX;
+              targetY = centerY;
+              lens.x = firstX;
+              lens.y = centerY;
+              frame.index = -1;
+              sweepVisible = false;
+            }
+          } else {
+            targetX = firstX;
+            targetY = centerY;
+            lens.x = firstX;
+            lens.y = centerY;
+            frame.index = -1;
+            sweepVisible = false;
+          }
         } else {
-          // 4. Silent reset back to first letter while invisible
-          targetX = firstX;
-          targetY = centerY;
-          lens.x = firstX;
-          lens.y = centerY;
-          frame.index = -1;
-          sweepVisible = false;
+          const cycleDuration = 5.6;
+          const cycleProgress = (clock % cycleDuration) / cycleDuration;
+
+          if (cycleProgress < 0.72) {
+            // 1. Forward sweep from first letter to last letter
+            const u = cycleProgress / 0.72;
+            targetX = firstX + (lastX - firstX) * u;
+            targetY = centerY;
+            sweepVisible = true;
+          } else if (cycleProgress < 0.82) {
+            // 2. Dwell on last letter
+            targetX = lastX;
+            targetY = centerY;
+            sweepVisible = true;
+          } else if (cycleProgress < 0.94) {
+            // 3. Vanish on last letter (frame & outline fade out without reversing)
+            targetX = lastX;
+            targetY = centerY;
+            sweepVisible = false;
+          } else {
+            // 4. Silent reset back to first letter while invisible
+            targetX = firstX;
+            targetY = centerY;
+            lens.x = firstX;
+            lens.y = centerY;
+            frame.index = -1;
+            sweepVisible = false;
+          }
         }
       }
 

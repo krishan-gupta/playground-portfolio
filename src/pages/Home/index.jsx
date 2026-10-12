@@ -5,8 +5,9 @@ import Meteors from '../../components/Meteors/Meteors';
 import { TechText } from '../../components/TechText/TechText';
 import { ProjectCard } from '../../components/ProjectCard/ProjectCard';
 import { projects, getFeaturedProjects } from '../../data/projects';
-import { skillCategories, additionalTech, csFundamentals, areasOfInterest } from '../../data/resume';
+import { skillCategories, databaseTech, additionalTech, csFundamentals, areasOfInterest } from '../../data/resume';
 import { achievementsData } from '../../data/achievements';
+import { TechIcon } from '../../components/TechIcon/TechIcon';
 import { useReveal } from '../../hooks/useReveal';
 import { useCountUp } from '../../hooks/useCountUp';
 import './Home.css';
@@ -146,23 +147,8 @@ export function HomePage() {
           {/* 6.2b Hero meteor shower (subtle shooting-star streaks in top 78% sky) */}
           <Meteors paused={isBloomPaused} />
 
-          {/* Corner mono captions */}
-          <div className="hero-caption hero-caption-tl" aria-hidden="true">
-            SYS.LOC // CHENNAI<br />
-            BATCH // MAY 2029
-          </div>
-          <div className="hero-caption hero-caption-tr" aria-hidden="true">
-            STATUS // OPEN TO INTERNSHIPS<br />
-            AFFIL // VIT CHENNAI
-          </div>
-
           <div className="hero-content">
             <div className="hero-sky-block">
-              <div className="hero-badge">
-                <span className="hero-badge-dot" />
-                <span className="hero-badge-text">PORTFOLIO // MULTI-TRACK</span>
-              </div>
-
               <h1 className="sr-only">Krishan Gupta</h1>
               {isMobile ? (
                 <div className="hero-name-stacked" aria-hidden="true">
@@ -179,6 +165,7 @@ export function HomePage() {
                       specks={reducedMotion ? 0 : 15}
                       speed={0.41}
                       sweep={!isBloomPaused && !reducedMotion}
+                      sweepRange={[0, 0.58]}
                     />
                   </div>
                   <div className="hero-name-stacked-line">
@@ -194,6 +181,7 @@ export function HomePage() {
                       specks={reducedMotion ? 0 : 15}
                       speed={0.41}
                       sweep={!isBloomPaused && !reducedMotion}
+                      sweepRange={[0.58, 1.0]}
                     />
                   </div>
                 </div>
@@ -322,25 +310,32 @@ export function HomePage() {
             </p>
           </div>
 
-          {/* 4 Category Cards */}
+          {/* 4 Category Cards in 2x2 Grid */}
           <div className="skills-categories-grid">
             {skillCategories.map((category) => (
               <div key={category.id} className="skill-category-card card">
                 <div className="skill-category-header">
                   <div className="skill-cat-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="2" y="3" width="20" height="14" rx="2" />
-                      <line x1="8" y1="21" x2="16" y2="21" />
-                      <line x1="12" y1="17" x2="12" y2="21" />
-                    </svg>
+                    {category.id === 'languages' && <TechIcon name="c++" size={22} />}
+                    {category.id === 'aiml' && <TechIcon name="generative" size={22} />}
+                    {category.id === 'frontend' && <TechIcon name="react" size={22} />}
+                    {category.id === 'cloud_iot' && <TechIcon name="esp32" size={22} />}
                   </div>
-                  <h3 className="skill-cat-title">{category.title}</h3>
+                  <div className="skill-cat-info">
+                    <h3 className="skill-cat-title">{category.title}</h3>
+                    {category.description && (
+                      <p className="skill-cat-subtitle">{category.description}</p>
+                    )}
+                  </div>
                 </div>
 
-                <div className="skills-chip-grid">
+                <div className="skills-pill-grid">
                   {category.skills.map((skill) => (
-                    <div key={skill.name} className="skill-chip">
-                      <span className="skill-name">{skill.name}</span>
+                    <div key={skill.name} className="skill-pill">
+                      <span className="skill-pill-icon">
+                        <TechIcon name={skill.name} size={18} />
+                      </span>
+                      <span className="skill-pill-name">{skill.name}</span>
                     </div>
                   ))}
                 </div>
@@ -351,25 +346,44 @@ export function HomePage() {
           {/* Additional Skill Strips */}
           <div className="skills-aux-wrapper">
             <div className="aux-strip-card">
-              <span className="aux-strip-label">ALSO USED IN PROJECTS</span>
+              <div className="aux-strip-header">
+                <span className="aux-strip-label">DATABASES & CACHING</span>
+                <span className="aux-strip-sub">High-throughput storage & indexing</span>
+              </div>
               <div className="aux-strip-chips">
-                {additionalTech.map((item) => (
-                  <span key={item} className="tag-chip">{item}</span>
+                {databaseTech.map((item) => (
+                  <div key={item} className="skill-pill aux-pill">
+                    <span className="skill-pill-icon">
+                      <TechIcon name={item} size={17} />
+                    </span>
+                    <span className="skill-pill-name">{item}</span>
+                  </div>
                 ))}
               </div>
             </div>
 
             <div className="aux-strip-card">
-              <span className="aux-strip-label">CS FUNDAMENTALS</span>
+              <div className="aux-strip-header">
+                <span className="aux-strip-label">CS FUNDAMENTALS</span>
+                <span className="aux-strip-sub">Theoretical & systems engineering pillars</span>
+              </div>
               <div className="aux-strip-chips">
                 {csFundamentals.map((item) => (
-                  <span key={item} className="tag-chip">{item}</span>
+                  <div key={item} className="skill-pill aux-pill">
+                    <span className="skill-pill-icon">
+                      <TechIcon name={item} size={17} />
+                    </span>
+                    <span className="skill-pill-name">{item}</span>
+                  </div>
                 ))}
               </div>
             </div>
 
             <div className="aux-strip-card">
-              <span className="aux-strip-label">AREAS OF INTEREST</span>
+              <div className="aux-strip-header">
+                <span className="aux-strip-label">AREAS OF INTEREST</span>
+                <span className="aux-strip-sub">Research, edge robotics & neural models</span>
+              </div>
               <div className="aux-strip-chips">
                 {areasOfInterest.map((item) => (
                   <span key={item} className="tag-chip" style={{ color: 'var(--accent-2)', borderColor: 'rgba(255, 122, 26, 0.3)' }}>{item}</span>
