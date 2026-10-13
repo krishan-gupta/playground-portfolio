@@ -30,8 +30,9 @@ function StatTile({ target, suffix = '', label }) {
 
 export function HomePage() {
   const featuredProjects = getFeaturedProjects();
-  const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formStatus, setFormStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'error'
+  const [formError, setFormError] = useState('');
   const horizonRef = useRef(null);
   const heroRef = useRef(null);
   const [isBloomPaused, setIsBloomPaused] = useState(false);
@@ -104,13 +105,41 @@ export function HomePage() {
     };
   }, [aboutRef]);
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => {
-      setFormData({ name: '', email: '', message: '' });
-      setFormSubmitted(false);
-    }, 4000);
+    setFormStatus('submitting');
+    setFormError('');
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+    if (!accessKey) {
+      setFormStatus('error');
+      setFormError('Web3Forms access key is missing. Please set VITE_WEB3FORMS_ACCESS_KEY in your .env file.');
+      return;
+    }
+
+    try {
+      const payload = new FormData(e.target);
+      payload.append('access_key', accessKey);
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: payload,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setFormStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setFormStatus('error');
+        setFormError(data.message || 'Transmission failed. Please try again.');
+      }
+    } catch (err) {
+      console.error('Contact form submission error:', err);
+      setFormStatus('error');
+      setFormError('Network error occurred. Please check your connection and try again.');
+    }
   };
 
   return (
@@ -535,22 +564,42 @@ export function HomePage() {
             </div>
 
             <div className="contact-form-side">
-              {formSubmitted ? (
+              {formStatus === 'success' ? (
                 <div className="form-success-banner">
-                  Message transmission received! Thank you for getting in touch.
+                  <p style={{ margin: 0, fontWeight: 500 }}>
+                    Message transmission received! Thank you for getting in touch.
+                  </p>
+                  <button
+                    type="button"
+                    className="btn btn-outline"
+                    style={{ marginTop: '1.25rem', fontSize: '0.85rem' }}
+                    onClick={() => setFormStatus('idle')}
+                  >
+                    Send Another Transmission
+                  </button>
                 </div>
               ) : (
                 <form className="contact-form" onSubmit={handleFormSubmit}>
+                  {formStatus === 'error' && (
+                    <div className="form-error-banner" role="alert">
+                      {formError || 'Failed to send transmission. Please try again.'}
+                    </div>
+                  )}
+
+                  <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+
                   <div className="form-group">
                     <label htmlFor="contact-name" className="form-label">NAME</label>
                     <input
                       id="contact-name"
+                      name="name"
                       type="text"
                       required
                       className="form-input"
                       placeholder="Jane Doe"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      disabled={formStatus === 'submitting'}
                     />
                   </div>
 
@@ -558,12 +607,14 @@ export function HomePage() {
                     <label htmlFor="contact-email" className="form-label">EMAIL</label>
                     <input
                       id="contact-email"
+                      name="email"
                       type="email"
                       required
                       className="form-input"
                       placeholder="jane@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      disabled={formStatus === 'submitting'}
                     />
                   </div>
 
@@ -571,16 +622,22 @@ export function HomePage() {
                     <label htmlFor="contact-message" className="form-label">MESSAGE</label>
                     <textarea
                       id="contact-message"
+                      name="message"
                       required
                       className="form-textarea"
                       placeholder="Discussing internship opportunities, research collaborations, or technical projects..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      disabled={formStatus === 'submitting'}
                     />
                   </div>
 
-                  <button type="submit" className="btn btn-primary form-submit-btn">
-                    Transmit Message
+                  <button
+                    type="submit"
+                    className="btn btn-primary form-submit-btn"
+                    disabled={formStatus === 'submitting'}
+                  >
+                    {formStatus === 'submitting' ? 'Transmitting...' : 'Transmit Message'}
                   </button>
                 </form>
               )}

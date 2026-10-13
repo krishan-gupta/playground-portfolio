@@ -864,12 +864,28 @@
   margin-top: 0.5rem;
 }
 
+.form-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
 .form-success-banner {
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   background: rgba(16, 185, 129, 0.15);
   border: 1px solid rgba(16, 185, 129, 0.4);
   border-radius: var(--radius-md);
   color: #34d399;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.form-error-banner {
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.25rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: var(--radius-md);
+  color: #f87171;
   font-size: 0.9rem;
   text-align: center;
 }
