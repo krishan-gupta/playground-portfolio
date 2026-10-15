@@ -23,7 +23,7 @@ function CertCard({ cert, index, onOpenImage }) {
   };
 
   return (
-    <li className="cert" style={{ '--cert-idx': index }}>
+    <li className="cert" id={`cert-${cert.id}`} style={{ '--cert-idx': index }}>
       <span className="cert-node" aria-hidden="true" />
       <article className="cert-card" onPointerMove={onMove}>
         <div className="cert-media">

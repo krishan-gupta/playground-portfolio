@@ -7,6 +7,7 @@ import { ProjectCard } from '../../components/ProjectCard/ProjectCard';
 import { projects, getFeaturedProjects } from '../../data/projects';
 import { skillCategories, databaseTech, csFundamentals, areasOfInterest } from '../../data/resume';
 import { achievementsData } from '../../data/achievements';
+import { certifications } from '../../data/certifications';
 import { TechIcon } from '../../components/TechIcon/TechIcon';
 import Grainient from '../../components/Grainient/Grainient';
 import { useReveal } from '../../hooks/useReveal';
@@ -322,14 +323,12 @@ export function HomePage() {
             <div className="about-portrait-wrapper">
               <div className="about-portrait-frame">
                 <div className="portrait-glow-ring" />
-                <div className="portrait-placeholder-art">
-                  <svg className="portrait-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>
-                  <span className="portrait-label">PORTRAIT [TBD]</span>
-                  <span className="portrait-sublabel">Photo to be updated</span>
-                </div>
+                <img
+                  src="/avatar.jpg"
+                  alt="Krishan Gupta"
+                  className="portrait-img"
+                  loading="eager"
+                />
               </div>
             </div>
 
@@ -356,11 +355,42 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 6.4 Skills Matrix */}
+      {/* 02 // Top 3 Projects */}
+      <section id="featured" className="section" ref={featuredRef}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">02 // Featured Work</span>
+            <h2 className="section-title">
+              Selected <span className="text-gradient">Projects & Prototypes</span>
+            </h2>
+            <p className="section-description">
+              Key builds spanning campus laundry platforms, embedded acoustic ML and privacy-first mobile vision.
+            </p>
+          </div>
+
+          <div className="featured-projects-grid">
+            {featuredProjects.slice(0, 3).map((project) => (
+              <ProjectCard key={project.slug} project={project} viewMode="grid" />
+            ))}
+          </div>
+
+          <div className="featured-actions-row">
+            <Link to="/projects" className="btn btn-secondary">
+              <span>View all projects</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 03 // Skills Matrix */}
       <section id="skills" className="section" ref={skillsRef}>
         <div className="container">
           <div className="section-header">
-            <span className="section-label">02 // Core Capabilities</span>
+            <span className="section-label">03 // Core Capabilities</span>
             <h2 className="section-title">
               Technical <span className="text-gradient">Skill Matrix</span>
             </h2>
@@ -453,37 +483,6 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 6.5 Top 3 Projects */}
-      <section id="featured" className="section" ref={featuredRef}>
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">03 // Featured Work</span>
-            <h2 className="section-title">
-              Selected <span className="text-gradient">Projects & Prototypes</span>
-            </h2>
-            <p className="section-description">
-              Key builds spanning campus laundry platforms, embedded acoustic ML and privacy-first mobile vision.
-            </p>
-          </div>
-
-          <div className="featured-projects-grid">
-            {featuredProjects.slice(0, 3).map((project) => (
-              <ProjectCard key={project.slug} project={project} viewMode="grid" />
-            ))}
-          </div>
-
-          <div className="featured-actions-row">
-            <Link to="/projects" className="btn btn-secondary">
-              <span>View all projects</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* 6.6 Patents and Certifications */}
       <section id="achievements" className="section" ref={achievementsRef}>
         <div className="container">
@@ -516,42 +515,48 @@ export function HomePage() {
             <div className="recognition-group">
               <h3 className="achievement-column-title">Certifications</h3>
               <div className="recognition-cards-grid">
-                {achievementsData.certifications.map((item) => (
-                  <div key={item.id} className="compact-item-card">
-                    <div className="compact-item-meta">
-                      <span className="compact-item-issuer">{item.issuer}</span>
-                      <span>{item.date}</span>
-                    </div>
-                    <h4 className="compact-item-title">
-                      {item.credentialUrl ? (
-                        <a
-                          href={item.credentialUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                {certifications.map((item) => {
+                  const targetTrack = item.tracks?.[0] || 'developer';
+                  const resumeUrl = `/resume/${targetTrack}#cert-${item.id}`;
+                  return (
+                    <div key={item.id} className="compact-item-card compact-cert-card">
+                      <div className="compact-item-meta">
+                        <span className="compact-item-issuer">{item.issuer}</span>
+                        <span>{item.date}</span>
+                      </div>
+                      <h4 className="compact-item-title">
+                        <Link
+                          to={resumeUrl}
                           className="compact-item-link"
+                          title={`View ${item.title} in Resume Timeline`}
                         >
                           {item.title}
-                          <span className="compact-link-icon" aria-hidden="true">↗</span>
-                        </a>
-                      ) : (
-                        item.title
-                      )}
-                    </h4>
-                    <p className="compact-item-desc">{item.description}</p>
-                    {item.credentialUrl && (
+                          <span className="compact-link-icon" aria-hidden="true">→</span>
+                        </Link>
+                      </h4>
+                      <p className="compact-item-desc">{item.description}</p>
                       <div className="compact-item-actions">
-                        <a
-                          href={item.credentialUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="compact-verify-badge"
+                        <Link
+                          to={resumeUrl}
+                          className="compact-verify-badge compact-resume-badge"
                         >
-                          Verify Credential ↗
-                        </a>
+                          View in Resume Timeline →
+                        </Link>
+                        {item.credentialUrl && (
+                          <a
+                            href={item.credentialUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="compact-verify-badge compact-external-badge"
+                            title="Verify directly on issuing portal"
+                          >
+                            Verify Credential ↗
+                          </a>
+                        )}
                       </div>
-                    )}
-                  </div>
-                ))}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

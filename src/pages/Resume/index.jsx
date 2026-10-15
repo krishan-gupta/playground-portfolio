@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRoute } from '../../router';
 import { getTrackById, defaultTrackId } from '../../data/tracks';
 import { getExperiencesForTrack, education } from '../../data/resume';
@@ -15,6 +15,24 @@ export function ResumePage({ track: initialTrack }) {
   const currentTrackId = initialTrack || defaultTrackId;
   const currentTrack = getTrackById(currentTrackId);
   const trackExperiences = getExperiencesForTrack(currentTrackId);
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#cert-')) {
+      const certId = hash.replace('#cert-', '');
+      const targetCert = certifications.find((c) => c.id === certId);
+      if (targetCert && !targetCert.tracks.includes(currentTrackId)) {
+        navigate(`/resume/${targetCert.tracks[0]}${hash}`, { replace: true });
+        return;
+      }
+      setTimeout(() => {
+        const el = document.getElementById(`cert-${certId}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 250);
+    }
+  }, [currentTrackId, navigate]);
 
   const handleTrackChange = (newTrackId) => {
     navigate(`/resume/${newTrackId}`);
@@ -147,7 +165,7 @@ export function ResumePage({ track: initialTrack }) {
         </section>
 
         {/* Certifications Section */}
-        <section className="resume-section">
+        <section id="certifications" className="resume-section">
           <h2 className="resume-sec-title">Certifications & Validations</h2>
           <CertTimeline certs={certifications} track={currentTrackId} />
         </section>

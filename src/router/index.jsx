@@ -2,8 +2,11 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 
 const RouterContext = createContext(null);
 
-function parsePath(fullUrl = window.location.pathname + window.location.search) {
-  const [pathname, search] = fullUrl.split('?');
+function parsePath(fullUrl = window.location.pathname + window.location.search + window.location.hash) {
+  const hashIdx = fullUrl.indexOf('#');
+  const hash = hashIdx !== -1 ? fullUrl.slice(hashIdx) : (window.location.hash || '');
+  const cleanUrl = hashIdx !== -1 ? fullUrl.slice(0, hashIdx) : fullUrl;
+  const [pathname, search] = cleanUrl.split('?');
   const query = {};
   if (search) {
     const searchParams = new URLSearchParams(search);
@@ -11,7 +14,7 @@ function parsePath(fullUrl = window.location.pathname + window.location.search) 
       query[key] = value;
     }
   }
-  return { pathname: pathname || '/', search: search ? `?${search}` : '', query };
+  return { pathname: pathname || '/', search: search ? `?${search}` : '', query, hash };
 }
 
 export function RouterProvider({ children }) {
@@ -31,7 +34,7 @@ export function RouterProvider({ children }) {
     if (to.startsWith('#')) {
       const el = document.getElementById(to.slice(1));
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
       return;
     }
@@ -45,15 +48,23 @@ export function RouterProvider({ children }) {
         window.history.pushState({}, '', to);
       }
 
-      setCurrentLocation(parsePath(to));
+      const parsed = parsePath(to);
+      setCurrentLocation(parsed);
       
-      if (!preserveScroll) {
+      if (!preserveScroll && !parsed.hash) {
         window.scrollTo({ top: 0, behavior: 'instant' });
       }
 
       setTimeout(() => {
         setIsTransitioning(false);
-      }, 50);
+        if (parsed.hash) {
+          const targetId = parsed.hash.replace(/^#/, '');
+          const el = document.getElementById(targetId);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      }, 70);
     }, 120);
   }, []);
 
@@ -74,6 +85,7 @@ export function RouterProvider({ children }) {
     pathname: currentLocation.pathname,
     search: currentLocation.search,
     query: currentLocation.query,
+    hash: currentLocation.hash,
     navigate,
     isTransitioning
   }), [currentLocation, navigate, isTransitioning]);
