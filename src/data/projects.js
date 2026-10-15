@@ -3,8 +3,7 @@ export const projectCategories = [
   { id: 'ai-ml', label: 'AI / ML' },
   { id: 'web', label: 'Web & Tools' },
   { id: 'cloud', label: 'Cloud & IoT' },
-  { id: 'hackathon', label: 'Hackathons' },
-  { id: 'research', label: 'Research' }
+  { id: 'hackathon', label: 'Hackathons' }
 ];
 
 export const projects = [
@@ -12,6 +11,7 @@ export const projects = [
     slug: 'dhobitrack',
     title: 'DhobiTrack: Campus Laundry Platform',
     category: 'web',
+    tracks: ['developer'],
     featured: true,
     status: 'Built (dashboard); backend planned',
     date: 'TBD',
@@ -38,6 +38,7 @@ export const projects = [
     slug: 'noise-pollution-monitor',
     title: 'AI-Powered Noise Pollution Monitor',
     category: 'cloud',
+    tracks: ['ai-research'],
     featured: true,
     status: 'Foundational project',
     date: 'TBD',
@@ -64,6 +65,7 @@ export const projects = [
     slug: 'context-preserving-document-editor',
     title: 'Context-Preserving Document Text Editor',
     category: 'hackathon',
+    tracks: ['ai-research'],
     featured: true,
     status: 'iQOO Hackathon 2026 concept (idea-screening stage)',
     date: 'TBD',
@@ -90,6 +92,7 @@ export const projects = [
     slug: 'semantic-search-engine',
     title: 'Semantic Search Engine for Documents',
     category: 'ai-ml',
+    tracks: ['ai-research'],
     featured: false,
     status: 'In progress (about 2-3 weeks)',
     date: 'TBD',
@@ -115,6 +118,7 @@ export const projects = [
     slug: 'cinecipher',
     title: 'CineCipher: Movie Discovery Platform',
     category: 'web',
+    tracks: ['developer'],
     featured: false,
     status: 'Foundational project',
     date: 'TBD',
@@ -133,51 +137,10 @@ export const projects = [
     ]
   },
   {
-    slug: 'instagram-reel-extractor',
-    title: 'Instagram Reel Content Extractor',
-    category: 'ai-ml',
-    featured: false,
-    status: 'Built',
-    date: 'TBD',
-    summary: 'Extracts structured knowledge and transcribed insight from short-form video reels using the Claude API with vision.',
-    tags: ['Claude API (Vision)', 'Python', 'AI Tools', 'Video Extraction'],
-    githubUrl: 'TBD',
-    liveUrl: 'TBD',
-    role: 'AI Tooling Developer',
-    overview: 'Automates the extraction of recipes, coding tips, and educational summaries from short-form visual video content into structured JSON and Markdown.',
-    problem: 'Helpful tutorials on Instagram Reels are ephemeral and impossible to index or search without manual transcription.',
-    approach: 'Extracted key video frame samples and fed them into Claude 3.5 Sonnet / Haiku with multimodal vision prompts to synthesize structured notes.',
-    result: 'Built and tested utility tool producing structured text and recipes from input video clips.',
-    metrics: [
-      { label: 'Foundation Model', value: 'Claude Vision' },
-      { label: 'Output Format', value: 'Structured Markdown' }
-    ]
-  },
-  {
-    slug: 'mcq-practice-app',
-    title: 'MCQ Practice App',
-    category: 'web',
-    featured: false,
-    status: 'Built',
-    date: 'TBD',
-    summary: 'Local single-file practice app with JSON question banks, wrong-answer reshuffling, and saved progress.',
-    tags: ['HTML5', 'JavaScript', 'localStorage', 'Educational Tools'],
-    githubUrl: 'TBD',
-    liveUrl: 'TBD',
-    role: 'Frontend Developer',
-    overview: 'A lightweight offline examination drill tool tailored for rapid question review and self-testing.',
-    problem: 'Online quiz websites are frequently ad-heavy, require account logins, and fail to prioritize repeated drilling of mistakes.',
-    approach: 'Created an offline-first single-file tool in vanilla JavaScript that ingests structured JSON question banks, saves progress to localStorage, and automatically isolates missed questions for targeted re-drilling.',
-    result: 'Built and in regular personal use for academic self-study and revision.',
-    metrics: [
-      { label: 'Offline Support', value: '100% Local' },
-      { label: 'Storage', value: 'localStorage' }
-    ]
-  },
-  {
     slug: 'rag-knowledge-pipeline',
     title: 'RAG Knowledge Retrieval Pipeline',
     category: 'ai-ml',
+    tracks: ['ai-research'],
     featured: false,
     status: 'Planned (Upcoming Portfolio Project)',
     date: 'TBD',
@@ -193,27 +156,6 @@ export const projects = [
     metrics: [
       { label: 'Status', value: 'Planned' },
       { label: 'Series', value: 'Project 2 of 10' }
-    ]
-  },
-  {
-    slug: 'hallucination-guardrails-filter',
-    title: 'AI Credibility & Hallucination Guardrails',
-    category: 'research',
-    featured: false,
-    status: 'Concept / Research in preparation',
-    date: 'TBD',
-    summary: 'Grounded verification layer filtering out hallucinated economic and factual claims in automated AI pipelines.',
-    tags: ['Research', 'AI Safety', 'Guardrails', 'Evaluation', 'In Prep'],
-    githubUrl: 'TBD',
-    liveUrl: 'TBD',
-    role: 'Researcher',
-    overview: 'Exploration linked directly with the ongoing research manuscript "The Credibility Trap: How AI Hallucinations Enable Economic Fraud".',
-    problem: 'Generative models confidently hallucinate fabricated citations, corporate entities, and numbers that enable fraud.',
-    approach: 'Designing programmatic verification heuristics and semantic consistency checks against authoritative datasets.',
-    result: 'Research paper manuscript in active preparation.',
-    metrics: [
-      { label: 'Domain', value: 'Economic AI Fraud' },
-      { label: 'Status', value: 'In Preparation' }
     ]
   }
 ];

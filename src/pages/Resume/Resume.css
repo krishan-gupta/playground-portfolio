@@ -217,6 +217,39 @@
 }
 
 @media (max-width: 600px) {
+  .resume-page-wrapper {
+    padding-top: calc(var(--nav-height) + 1rem);
+  }
+  .resume-hero {
+    padding: 1.5rem 0 1rem;
+  }
+  .page-title-tech {
+    height: 100px;
+  }
+  .resume-subtitle {
+    font-size: 0.95rem;
+  }
+  .track-headline {
+    font-size: 1.4rem;
+    word-break: break-word;
+  }
+  .track-summary-text {
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+  .track-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .track-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .resume-sec-title {
+    font-size: 1.35rem;
+    margin-bottom: 1.25rem;
+  }
   .education-header {
     flex-direction: column;
     gap: 0.25rem;
@@ -225,6 +258,11 @@
     padding: 1.25rem 1rem;
   }
   .track-overview-card {
-    padding: 1.5rem 1rem;
+    padding: 1.35rem 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .highlighted-skill-pill {
+    padding: 0.38rem 0.75rem;
+    font-size: 0.78rem;
   }
 }

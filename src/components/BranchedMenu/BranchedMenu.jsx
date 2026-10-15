@@ -21,12 +21,18 @@ export function BranchedMenu({ activeTrackId, onSelectTrack, isCompact = false }
       <div className="branched-lines-container" aria-hidden="true">
         <svg className="branched-lines-svg" viewBox="0 0 1000 48" preserveAspectRatio="none">
           {/* Main horizontal bus */}
-          <line x1="80" y1="4" x2="920" y2="4" className="branch-bus-line" />
+          <line
+            x1={(1000 / tracks.length) * 0.5}
+            y1="4"
+            x2={(1000 / tracks.length) * (tracks.length - 0.5)}
+            y2="4"
+            className="branch-bus-line"
+          />
           {/* Central feeder line from root */}
           <line x1="500" y1="0" x2="500" y2="4" className="branch-feeder-line" />
           {/* Drops to each track */}
           {tracks.map((track, i) => {
-            const x = 100 + (800 / (tracks.length - 1)) * i;
+            const x = (1000 / tracks.length) * (i + 0.5);
             const isActive = track.id === activeTrackId;
             return (
               <g key={track.id} className={isActive ? 'branch-line-active' : ''}>

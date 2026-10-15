@@ -48,31 +48,51 @@ export const achievementsData = {
   certifications: [
     {
       id: 'cert-1',
-      title: 'AWS Certified Cloud Practitioner (CLF-C02)',
-      issuer: 'Amazon Web Services',
-      date: 'June 2026',
-      description: 'Validated foundational knowledge of AWS Cloud concepts, security, architecture, pricing, and support models.'
+      title: 'Amazon Web Services Cloud Practitioner',
+      issuer: 'Amazon Web Services (AWS)',
+      date: 'September 2026',
+      description: 'Validated foundational knowledge of AWS Cloud concepts, security, architecture, pricing, and support models.',
+      credentialUrl: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/67dc10190ed846c29012853b1758486d'
     },
     {
       id: 'cert-2',
-      title: 'Getting Started with AI on Jetson Nano',
-      issuer: 'NVIDIA Deep Learning Institute (DLI)',
-      date: 'March 2026',
-      description: 'Hands-on training in computer vision models, transfer learning, and deep learning classification at the edge.'
+      title: 'ISRO Bharatiya Antariksh Hackathon 2026',
+      issuer: 'ISRO - Indian Space Research Organization',
+      date: 'August 2026',
+      description: 'National space tech hackathon organized by ISRO exploring spatial computing, geospatial analytics, and automated systems.',
+      credentialUrl: 'https://certificate.hack2skill.com/verify/2026H2S06BAH-P39009'
     },
     {
       id: 'cert-3',
-      title: 'GenAI Job Simulation',
-      issuer: 'BCG via Forage',
-      date: 'February 2026',
-      description: 'Completed realistic consulting simulation leveraging generative AI algorithms, prompt engineering, and business data analysis.'
+      title: 'IBM Generative AI',
+      issuer: 'IBM',
+      date: 'July 2026',
+      description: 'Curriculum covering generative foundation models, prompt engineering, and ethical AI deployment.',
+      credentialUrl: 'https://courses.ibmcep.cognitiveclass.ai/certificates/2ad40c7fbd774913ba3fd4c8ca3f1c59'
     },
     {
       id: 'cert-4',
-      title: 'Generative AI',
-      issuer: 'IBM',
-      date: 'TBD',
-      description: 'Comprehensive curriculum spanning generative foundation models, prompt engineering, and ethical AI deployment.'
+      title: 'Getting Started with AI on Jetson Nano',
+      issuer: 'NVIDIA',
+      date: 'May 2026',
+      description: 'Hands-on training in computer vision models, transfer learning, and deep learning classification at the edge with Jetson Nano.',
+      credentialUrl: 'https://learn.nvidia.com/certificates?id=yculx1BDQqGUfmecC8g4Gw#'
+    },
+    {
+      id: 'cert-5',
+      title: 'GenAI Job Simulation',
+      issuer: 'BCG via Forage',
+      date: 'February 2026',
+      description: 'Completed realistic consulting simulation leveraging generative AI algorithms, prompt engineering, and business data analysis.',
+      credentialUrl: 'https://www.theforage.com/completion-certificates/SKZxezskWgmFjRvj9/gabev3vXhuACr48eb_SKZxezskWgmFjRvj9_696ca0798d5b9c666d3ae1ee_1771108484394_completion_certificate.pdf'
+    },
+    {
+      id: 'cert-6',
+      title: 'Introduction to Web Development',
+      issuer: 'Udemy',
+      date: 'June 2021',
+      description: 'Comprehensive foundation in web development covering HTML, CSS, JavaScript, and responsive website architecture.',
+      credentialUrl: 'https://www.udemy.com/certificate/UC-adc37299-3d6e-43ce-b36a-1ba36c10ec3b/'
     }
   ]
 };

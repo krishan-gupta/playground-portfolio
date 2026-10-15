@@ -755,6 +755,55 @@
   line-height: 1.55;
 }
 
+.compact-item-link {
+  color: var(--text);
+  transition: color var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.compact-item-link:hover {
+  color: var(--accent-2);
+}
+
+.compact-link-icon {
+  font-size: 0.82rem;
+  color: var(--accent);
+  transition: transform var(--transition-fast);
+}
+
+.compact-item-link:hover .compact-link-icon {
+  transform: translate(2px, -2px);
+}
+
+.compact-item-actions {
+  margin-top: 0.85rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.compact-verify-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent-2);
+  background: rgba(255, 122, 26, 0.08);
+  border: 1px solid rgba(255, 122, 26, 0.22);
+  padding: 0.22rem 0.65rem;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+}
+
+.compact-verify-badge:hover {
+  background: rgba(255, 122, 26, 0.18);
+  border-color: rgba(255, 122, 26, 0.45);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
 /* Contact Section */
 .contact-card-wrapper {
   background: linear-gradient(180deg, var(--bg-elev-2) 0%, var(--bg-elev) 100%);
@@ -1088,6 +1137,44 @@
   .form-textarea {
     padding: 0.65rem 0.85rem;
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-buttons {
+    width: min(94vw, 340px);
+    gap: 0.35rem;
+  }
+  .hero-buttons .btn {
+    padding: 0.65rem 0.45rem;
+    font-size: 0.76rem;
+  }
+  .skills-pill-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .skill-pill {
+    padding: 0.55rem 0.75rem;
+  }
+  .contact-card-wrapper {
+    padding: 1.6rem 1rem;
+    gap: 1.75rem;
+  }
+  .contact-quick-item {
+    font-size: 0.85rem;
+    word-break: break-word;
+  }
+  .contact-quick-item a {
+    word-break: break-all;
+  }
+  .stat-tile {
+    padding: 0.65rem 0.35rem;
+  }
+  .stat-number {
+    font-size: 1.45rem;
+  }
+  .stat-label {
+    font-size: 0.64rem;
   }
 }
 

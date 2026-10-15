@@ -163,3 +163,49 @@
     gap: 2rem;
   }
 }
+
+@media (max-width: 600px) {
+  .experience-main {
+    padding: 1.25rem 1rem;
+  }
+  .experience-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding-bottom: 0.85rem;
+  }
+  .experience-role {
+    font-size: 1.15rem;
+    margin-bottom: 0.2rem;
+  }
+  .experience-company-line {
+    flex-wrap: wrap;
+    gap: 0.35rem 0.5rem;
+    font-size: 0.88rem;
+  }
+  .experience-period {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.65rem;
+  }
+  .experience-bullets {
+    gap: 0.65rem;
+    margin-bottom: 1.25rem;
+  }
+  .experience-bullet {
+    font-size: 0.88rem;
+    gap: 0.5rem;
+    line-height: 1.5;
+  }
+  .experience-impact-panel {
+    padding: 1.25rem 1rem;
+  }
+  .impact-metrics-list {
+    gap: 1.25rem;
+  }
+  .impact-metric-value {
+    font-size: 1.45rem;
+  }
+  .impact-metric-label {
+    font-size: 0.7rem;
+  }
+}

@@ -2,7 +2,8 @@ import React from 'react';
 import { useRoute } from '../../router';
 import { getTrackById, defaultTrackId } from '../../data/tracks';
 import { getExperiencesForTrack, education } from '../../data/resume';
-import { achievementsData } from '../../data/achievements';
+import { certifications } from '../../data/certifications';
+import { CertTimeline } from './CertTimeline';
 import { BranchedMenu } from '../../components/BranchedMenu/BranchedMenu';
 import { ExperienceCard } from '../../components/ExperienceCard/ExperienceCard';
 import { HorizonBloom } from '../../components/HorizonBloom/HorizonBloom';
@@ -148,18 +149,7 @@ export function ResumePage({ track: initialTrack }) {
         {/* Certifications Section */}
         <section className="resume-section">
           <h2 className="resume-sec-title">Certifications & Validations</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.25rem' }}>
-            {achievementsData.certifications.map((cert) => (
-              <div key={cert.id} className="compact-item-card">
-                <div className="compact-item-meta">
-                  <span className="compact-item-issuer">{cert.issuer}</span>
-                  <span>{cert.date}</span>
-                </div>
-                <h4 className="compact-item-title">{cert.title}</h4>
-                <p className="compact-item-desc">{cert.description}</p>
-              </div>
-            ))}
-          </div>
+          <CertTimeline certs={certifications} track={currentTrackId} />
         </section>
       </div>
     </div>

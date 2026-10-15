@@ -5,7 +5,7 @@ import Meteors from '../../components/Meteors/Meteors';
 import { TechText } from '../../components/TechText/TechText';
 import { ProjectCard } from '../../components/ProjectCard/ProjectCard';
 import { projects, getFeaturedProjects } from '../../data/projects';
-import { skillCategories, databaseTech, additionalTech, csFundamentals, areasOfInterest } from '../../data/resume';
+import { skillCategories, databaseTech, csFundamentals, areasOfInterest } from '../../data/resume';
 import { achievementsData } from '../../data/achievements';
 import { TechIcon } from '../../components/TechIcon/TechIcon';
 import Grainient from '../../components/Grainient/Grainient';
@@ -376,7 +376,7 @@ export function HomePage() {
                 <div className="skill-category-header">
                   <div className="skill-cat-icon">
                     {category.id === 'languages' && <TechIcon name="c++" size={22} />}
-                    {category.id === 'aiml' && <TechIcon name="generative" size={22} />}
+                    {category.id === 'aiml' && <TechIcon name="aiml" size={22} />}
                     {category.id === 'frontend' && <TechIcon name="react" size={22} />}
                     {category.id === 'cloud_iot' && <TechIcon name="esp32" size={22} />}
                   </div>
@@ -522,8 +522,34 @@ export function HomePage() {
                       <span className="compact-item-issuer">{item.issuer}</span>
                       <span>{item.date}</span>
                     </div>
-                    <h4 className="compact-item-title">{item.title}</h4>
+                    <h4 className="compact-item-title">
+                      {item.credentialUrl ? (
+                        <a
+                          href={item.credentialUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="compact-item-link"
+                        >
+                          {item.title}
+                          <span className="compact-link-icon" aria-hidden="true">↗</span>
+                        </a>
+                      ) : (
+                        item.title
+                      )}
+                    </h4>
                     <p className="compact-item-desc">{item.description}</p>
+                    {item.credentialUrl && (
+                      <div className="compact-item-actions">
+                        <a
+                          href={item.credentialUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="compact-verify-badge"
+                        >
+                          Verify Credential ↗
+                        </a>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -555,10 +581,6 @@ export function HomePage() {
                 <div className="contact-quick-item">
                   <span className="contact-quick-icon">📍</span>
                   <span>Chennai, India</span>
-                </div>
-                <div className="contact-quick-item">
-                  <span className="contact-quick-icon">⚡</span>
-                  <span>Response Time: TBD</span>
                 </div>
               </div>
             </div>

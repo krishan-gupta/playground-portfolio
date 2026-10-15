@@ -32,14 +32,14 @@ export const experiences = [
     role: 'Technical Specialist',
     location: 'Chennai, India',
     period: 'Sep 2025 — Present',
-    tracks: ['cloud-devops', 'leadership'],
+    tracks: ['developer', 'leadership'],
     impact: [
       { label: 'Focus Area', value: 'Cloud Foundations' },
       { label: 'Activities', value: 'Workshops & Labs' }
     ],
     tech: ['AWS', 'GCP', 'Linux', 'Cloud Operations'],
     bulletsByTrack: {
-      'cloud-devops': [
+      developer: [
         'Active Technical Specialist contributing to cloud operations, hands-on infrastructure workshops, and student labs.',
         'Operational responsibilities and upcoming chapter projects: Details TBD.'
       ],
@@ -55,7 +55,7 @@ export const experiences = [
     role: 'Web Developer',
     location: 'Chennai, India',
     period: 'Mar 2026 — Present',
-    tracks: ['developer', 'cloud-devops'],
+    tracks: ['developer'],
     impact: [
       { label: 'Focus Area', value: 'Web Properties' },
       { label: 'Affiliation', value: 'AWS Community' }
@@ -65,10 +65,6 @@ export const experiences = [
       developer: [
         'Developing and updating web portals and digital interfaces for AWS Cloud Club VIT Chennai.',
         'Building responsive frontends and coordinating event registrations: Details TBD.'
-      ],
-      'cloud-devops': [
-        'Deploying and managing club web properties leveraging AWS cloud primitives.',
-        'Building and maintaining infrastructure workflows: Details TBD.'
       ]
     }
   },
@@ -78,7 +74,7 @@ export const experiences = [
     role: 'AWS Student Builder Campus Leader (Selected Participant)',
     location: 'Chennai, India',
     period: '3 Aug — 11 Sep 2026',
-    tracks: ['cloud-devops', 'leadership'],
+    tracks: ['leadership'],
     impact: [
       { label: 'Student Sign-ups', value: '300+' },
       { label: 'Programme Type', value: 'Campus Leader' },
@@ -86,15 +82,10 @@ export const experiences = [
     ],
     tech: ['AWS Builder Center', 'Campus Outreach', 'Community Growth'],
     bulletsByTrack: {
-      'cloud-devops': [
+      leadership: [
         'Selected to participate in the prestigious AWS Student Builder Campus Leader programme to champion the AWS Builder Center.',
         'Promoted cloud learning resources, driving 300+ verifiable student sign-ups across VIT Chennai.',
         'Guided students through foundational cloud learning modules and certification preparation pathways.'
-      ],
-      leadership: [
-        'Led high-impact peer advocacy and campaign outreach across engineering batches at VIT Chennai.',
-        'Achieved 300+ student sign-ups for AWS Builder Center through workshops, classroom talks, and peer engagement.',
-        'Recognized for exceptional campus leadership and builder enablement.'
       ]
     }
   }
