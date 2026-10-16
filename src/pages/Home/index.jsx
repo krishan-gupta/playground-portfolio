@@ -347,8 +347,8 @@ export function HomePage() {
               <div className="about-stats-row">
                 <StatTile target={projects.length} suffix="" label="Projects" />
                 <StatTile target={1} suffix="" label="Patent filed" />
-                <StatTile target={achievementsData.certifications.length} suffix="" label="Certificates" />
-                <StatTile target={1} suffix="" label="AWS certification passed" />
+                <StatTile target={achievementsData.certifications.length} suffix="" label="Certifications passed" />
+                <StatTile target={1} suffix="" label="AWS Certified" />
               </div>
             </div>
           </div>
@@ -511,6 +511,53 @@ export function HomePage() {
               </div>
             </div>
 
+            {/* Row Group: Hackathons & Competitions */}
+            {achievementsData.competitions && achievementsData.competitions.length > 0 && (
+              <div className="recognition-group">
+                <h3 className="achievement-column-title">Hackathons & Space Competitions</h3>
+                <div className="recognition-cards-grid">
+                  {achievementsData.competitions.map((item) => (
+                    <div key={item.id} className="compact-item-card compact-cert-card">
+                      <div className="compact-item-meta">
+                        <span className="compact-item-issuer">{item.issuer}</span>
+                        <span>{item.date}</span>
+                      </div>
+                      <h4 className="compact-item-title">
+                        <Link
+                          to="/resume#hackathons-competitions"
+                          className="compact-item-link"
+                          title={`View ${item.title} in Resume`}
+                        >
+                          {item.title}
+                          <span className="compact-link-icon" aria-hidden="true">→</span>
+                        </Link>
+                      </h4>
+                      <p className="compact-item-desc">{item.description}</p>
+                      <div className="compact-item-actions">
+                        <Link
+                          to="/resume#hackathons-competitions"
+                          className="compact-verify-badge compact-resume-badge"
+                        >
+                          View in Resume →
+                        </Link>
+                        {item.credentialUrl && item.credentialUrl.startsWith('http') && (
+                          <a
+                            href={item.credentialUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="compact-verify-badge compact-external-badge"
+                            title="Verify directly on issuing portal"
+                          >
+                            Verify Participation ↗
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Row Group 2: Certifications (Row-wise, max 2 items per row) */}
             <div className="recognition-group">
               <h3 className="achievement-column-title">Certifications</h3>
@@ -542,7 +589,7 @@ export function HomePage() {
                         >
                           View in Resume Timeline →
                         </Link>
-                        {item.credentialUrl && (
+                        {item.credentialUrl && item.credentialUrl.startsWith('http') && (
                           <a
                             href={item.credentialUrl}
                             target="_blank"
@@ -585,7 +632,7 @@ export function HomePage() {
                 </div>
                 <div className="contact-quick-item">
                   <span className="contact-quick-icon">📍</span>
-                  <span>Chennai, India</span>
+                  <span>Chennai</span>
                 </div>
               </div>
             </div>

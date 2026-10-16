@@ -449,7 +449,7 @@ export function SlingTop({
           </button>
         </div>
       </div>
-      <span className="sling-label">TOP</span>
+      <span className="sling-label">SLING ↑</span>
     </aside>
   );
 }

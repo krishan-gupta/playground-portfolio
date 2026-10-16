@@ -119,9 +119,9 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 140, 42, 0.6);
-  background: #fdfaf5;
-  color: #16120e;
+  border: 1.5px solid rgba(255, 140, 42, 0.65);
+  background: linear-gradient(135deg, rgba(28, 22, 18, 0.96), rgba(16, 13, 10, 0.98));
+  color: #ff9d3b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,39 +129,42 @@
   touch-action: none;
   pointer-events: auto;
   box-shadow: 
-    0 4px 18px rgba(0, 0, 0, 0.65), 
-    0 0 14px rgba(255, 122, 26, 0.35),
-    inset 0 1px 2px rgba(255, 255, 255, 0.9);
-  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    0 4px 18px rgba(0, 0, 0, 0.8), 
+    0 0 16px rgba(255, 122, 26, 0.35),
+    inset 0 1px 1px rgba(255, 179, 71, 0.3);
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease, color 0.2s ease;
   outline: none;
 }
 
 .sling-pad:hover {
-  border-color: rgba(255, 155, 55, 0.9);
+  border-color: rgba(255, 160, 55, 0.95);
+  color: #ffbe73;
   box-shadow: 
-    0 6px 20px rgba(0, 0, 0, 0.7), 
-    0 0 18px rgba(255, 122, 26, 0.5),
-    inset 0 1px 2px rgba(255, 255, 255, 1);
+    0 6px 22px rgba(0, 0, 0, 0.85), 
+    0 0 22px rgba(255, 122, 26, 0.65),
+    inset 0 0 10px rgba(255, 140, 42, 0.25);
 }
 
 .sling-pad:active,
 .sling-scroll-top[data-held] .sling-pad {
   cursor: grabbing;
-  background: #fff5e8;
+  background: linear-gradient(135deg, rgba(38, 28, 20, 0.98), rgba(22, 16, 12, 1));
   border-color: #ff7a1a;
+  color: #ffffff;
   box-shadow: 
-    0 6px 24px rgba(0, 0, 0, 0.8), 
-    0 0 20px rgba(255, 122, 26, 0.65),
-    inset 0 1px 2px rgba(255, 255, 255, 0.9);
+    0 6px 26px rgba(0, 0, 0, 0.9), 
+    0 0 26px rgba(255, 122, 26, 0.8),
+    inset 0 0 14px rgba(255, 140, 42, 0.4);
 }
 
 .sling-scroll-top[data-armed] .sling-pad {
-  background: #ffecd6;
+  background: linear-gradient(135deg, rgba(50, 32, 20, 1), rgba(28, 18, 12, 1));
   border-color: #ffaa33;
+  color: #ffffff;
   box-shadow: 
-    0 8px 30px rgba(0, 0, 0, 0.85), 
-    0 0 28px rgba(255, 157, 59, 0.95),
-    inset 0 0 8px rgba(255, 140, 42, 0.5);
+    0 8px 32px rgba(0, 0, 0, 0.95), 
+    0 0 32px rgba(255, 157, 59, 1),
+    inset 0 0 14px rgba(255, 157, 59, 0.6);
   animation: armedPulse 0.7s infinite alternate ease-in-out;
 }
 
@@ -205,15 +208,16 @@
   font-family: var(--font-mono);
   font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
-  color: var(--text-muted);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.16em;
+  color: #ff9d3b;
+  text-shadow: 0 0 8px rgba(255, 157, 59, 0.45);
   transition: color var(--transition-fast), opacity 0.18s ease, transform 0.18s ease;
   pointer-events: none;
 }
 
 .sling-scroll-top:hover .sling-label {
-  color: var(--accent);
+  color: #ffbe73;
+  text-shadow: 0 0 12px rgba(255, 157, 59, 0.7);
 }
 
 .sling-scroll-top[data-held] .sling-label {

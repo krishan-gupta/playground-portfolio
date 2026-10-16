@@ -65,7 +65,9 @@ export function ProjectCard({ project, viewMode = 'grid' }) {
         </div>
         <div className="folder-tab-meta">
           {project.featured && <span className="featured-badge">FEATURED</span>}
-          <span className="folder-date">{project.date}</span>
+          {project.date && project.date !== 'TBD' && (
+            <span className="folder-date">{project.date}</span>
+          )}
         </div>
       </div>
 

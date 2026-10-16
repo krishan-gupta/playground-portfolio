@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useRoute } from '../../router';
 import { getTrackById, defaultTrackId } from '../../data/tracks';
 import { getExperiencesForTrack, education } from '../../data/resume';
-import { certifications } from '../../data/certifications';
+import { certifications, isroParticipation } from '../../data/certifications';
 import { CertTimeline } from './CertTimeline';
 import { BranchedMenu } from '../../components/BranchedMenu/BranchedMenu';
 import { ExperienceCard } from '../../components/ExperienceCard/ExperienceCard';
@@ -18,19 +18,21 @@ export function ResumePage({ track: initialTrack }) {
 
   useEffect(() => {
     const hash = window.location.hash;
-    if (hash && hash.startsWith('#cert-')) {
-      const certId = hash.replace('#cert-', '');
-      const targetCert = certifications.find((c) => c.id === certId);
-      if (targetCert && !targetCert.tracks.includes(currentTrackId)) {
-        navigate(`/resume/${targetCert.tracks[0]}${hash}`, { replace: true });
-        return;
-      }
-      setTimeout(() => {
-        const el = document.getElementById(`cert-${certId}`);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (hash) {
+      if (hash.startsWith('#cert-') || hash.startsWith('#isro-')) {
+        const certId = hash.replace('#cert-', '').replace('#', '');
+        const targetCert = certifications.find((c) => c.id === certId);
+        if (targetCert && !targetCert.tracks.includes(currentTrackId)) {
+          navigate(`/resume/${targetCert.tracks[0]}${hash}`, { replace: true });
+          return;
         }
-      }, 250);
+        setTimeout(() => {
+          const el = document.getElementById(`cert-${certId}`) || document.getElementById(certId);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 250);
+      }
     }
   }, [currentTrackId, navigate]);
 
@@ -162,6 +164,63 @@ export function ResumePage({ track: initialTrack }) {
               <p className="education-details">{edu.details}</p>
             </div>
           ))}
+        </section>
+
+        {/* Hackathons & Space Competitions */}
+        <section id="hackathons-competitions" className="resume-section">
+          <h2 className="resume-sec-title">Hackathons & Space Competitions</h2>
+          <div id="cert-isro-hackathon-2026" className="isro-showcase-card">
+            <div className="isro-card-inner">
+              <div className="isro-media">
+                <a
+                  href={isroParticipation.image}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="isro-img-btn"
+                  title="View ISRO Certificate"
+                >
+                  <img src={isroParticipation.image} alt={isroParticipation.title} loading="lazy" />
+                </a>
+              </div>
+              <div className="isro-body">
+                <div className="isro-meta">
+                  <span className="isro-issuer">{isroParticipation.issuer}</span>
+                  <span className="isro-chip-type">National Space Hackathon Participation</span>
+                  <span className="cert-verified">Verified</span>
+                </div>
+                <h3 className="isro-title">{isroParticipation.title}</h3>
+                <p className="isro-date">{isroParticipation.date}</p>
+                <p className="isro-desc">{isroParticipation.description}</p>
+                <ul className="cert-skills">
+                  {isroParticipation.skills.map((s) => (
+                    <li key={s}>{s}</li>
+                  ))}
+                </ul>
+                <div className="isro-actions">
+                  {isroParticipation.credentialUrl && isroParticipation.credentialUrl.startsWith('http') && (
+                    <a
+                      className="cert-btn cert-btn--primary"
+                      href={isroParticipation.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Verify Participation &#8599;
+                    </a>
+                  )}
+                  {((isroParticipation.certificateUrl && isroParticipation.certificateUrl.startsWith('http')) || isroParticipation.image) && (
+                    <a
+                      className="cert-btn"
+                      href={isroParticipation.certificateUrl || isroParticipation.image}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View Certificate
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Certifications Section */}

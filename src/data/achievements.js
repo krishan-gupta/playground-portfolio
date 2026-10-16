@@ -45,6 +45,17 @@ export const achievementsData = {
       description: 'Empirical research manuscript in preparation exploring automated hallucination dynamics and verification mechanisms in financial contexts.'
     }
   ],
+  competitions: [
+    {
+      id: 'isro-hackathon-2026',
+      title: 'ISRO Bharatiya Antariksh Hackathon 2026',
+      issuer: 'ISRO - Indian Space Research Organization',
+      date: 'August 2026',
+      type: 'National Hackathon Participation',
+      description: 'National space tech hackathon organized by ISRO exploring spatial computing, geospatial analytics, and automated systems.',
+      credentialUrl: 'https://certificate.hack2skill.com/verify/2026H2S06BAH-P39009'
+    }
+  ],
   certifications: [
     {
       id: 'cert-1',
@@ -53,14 +64,6 @@ export const achievementsData = {
       date: 'September 2026',
       description: 'Validated foundational knowledge of AWS Cloud concepts, security, architecture, pricing, and support models.',
       credentialUrl: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/67dc10190ed846c29012853b1758486d'
-    },
-    {
-      id: 'cert-2',
-      title: 'ISRO Bharatiya Antariksh Hackathon 2026',
-      issuer: 'ISRO - Indian Space Research Organization',
-      date: 'August 2026',
-      description: 'National space tech hackathon organized by ISRO exploring spatial computing, geospatial analytics, and automated systems.',
-      credentialUrl: 'https://certificate.hack2skill.com/verify/2026H2S06BAH-P39009'
     },
     {
       id: 'cert-3',

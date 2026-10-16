@@ -1,3 +1,18 @@
+export const isroParticipation = {
+  id: "isro-hackathon-2026",
+  title: "ISRO Bharatiya Antariksh Hackathon 2026",
+  issuer: "ISRO - Indian Space Research Organization",
+  type: "National Space Hackathon Participation",
+  date: "August 2026",
+  description: "National space tech hackathon organized by ISRO exploring spatial computing, geospatial analytics, and automated systems.",
+  skills: ["Space Tech", "Geospatial Analytics", "Spatial Computing", "System Design"],
+  image: "/certs/isro-hackathon.png",
+  credentialId: "2026H2S06BAH-P39009",
+  credentialUrl: "https://certificate.hack2skill.com/verify/2026H2S06BAH-P39009",
+  certificateUrl: "/certs/isro-hackathon.png",
+  tracks: ["ai-research", "leadership", "developer"],
+};
+
 export const certifications = [
   {
     id: "aws-ccp",
@@ -13,20 +28,6 @@ export const certifications = [
     credentialUrl: "https://cp.certmetrics.com/amazon/en/public/verify/credential/67dc10190ed846c29012853b1758486d",
     certificateUrl: "/certs/aws-ccp.png",
     tracks: ["developer", "ai-research", "leadership"],
-  },
-  {
-    id: "isro-hackathon-2026",
-    title: "ISRO Bharatiya Antariksh Hackathon 2026",
-    issuer: "ISRO - Indian Space Research Organization",
-    type: "Hackathon / Competition",
-    date: "August 2026",
-    description: "National space tech hackathon organized by ISRO exploring spatial computing, geospatial analytics, and automated systems.",
-    skills: ["Space Tech", "Geospatial Analytics", "Spatial Computing", "System Design"],
-    image: "/certs/isro-hackathon.png",
-    credentialId: "2026H2S06BAH-P39009",
-    credentialUrl: "https://certificate.hack2skill.com/verify/2026H2S06BAH-P39009",
-    certificateUrl: "/certs/isro-hackathon.png",
-    tracks: ["ai-research", "leadership"],
   },
   {
     id: "ibm-genai",

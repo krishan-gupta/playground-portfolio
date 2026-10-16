@@ -76,9 +76,9 @@ function CertCard({ cert, index, onOpenImage }) {
             </p>
           )}
 
-          {(cert.credentialUrl || cert.certificateUrl || cert.image) && (
+          {((cert.credentialUrl && cert.credentialUrl.startsWith('http')) || (cert.certificateUrl && cert.certificateUrl.startsWith('http')) || cert.image) && (
             <div className="cert-actions">
-              {cert.credentialUrl && (
+              {cert.credentialUrl && cert.credentialUrl.startsWith('http') && (
                 <a
                   className="cert-btn cert-btn--primary"
                   href={cert.credentialUrl}
@@ -88,7 +88,7 @@ function CertCard({ cert, index, onOpenImage }) {
                   Verify credential &#8599;
                 </a>
               )}
-              {(cert.certificateUrl || cert.image) && (
+              {((cert.certificateUrl && cert.certificateUrl.startsWith('http')) || cert.image) && (
                 <a
                   className="cert-btn"
                   href={cert.certificateUrl || cert.image}

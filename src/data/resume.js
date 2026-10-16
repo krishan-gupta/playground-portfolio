@@ -112,9 +112,7 @@ export const skillCategories = [
       { name: 'Java' },
       { name: 'JavaScript' },
       { name: 'TypeScript' },
-      { name: 'SQL' },
-      { name: 'R' },
-      { name: 'MATLAB' }
+      { name: 'SQL' }
     ]
   },
   {
@@ -126,8 +124,7 @@ export const skillCategories = [
       { name: 'Generative Imaging' },
       { name: 'Prompt Engineering' },
       { name: 'NumPy' },
-      { name: 'Pandas' },
-      { name: 'MATLAB' }
+      { name: 'Pandas' }
     ]
   },
   {
@@ -181,7 +178,6 @@ export const additionalTech = [
   'ESP32',
   'NumPy',
   'Pandas',
-  'MATLAB',
   'Fastify',
   'PostgreSQL',
   'Redis'
